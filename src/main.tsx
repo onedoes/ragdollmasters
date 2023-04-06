@@ -1,8 +1,9 @@
 //
 
+import "@unocss/reset/eric-meyer.css";
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
-import "virtual:windi.css";
+import "virtual:uno.css";
 import App from "./App";
 
 //

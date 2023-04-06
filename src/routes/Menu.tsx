@@ -9,7 +9,7 @@ const MenuButton: FC<ComponentPropsWithoutRef<"button">> = ({
   ...props
 }) => (
   <button
-    className="font-medium text-center py-5 animate-text-color-rainbow text-size-3.5rem uppercase"
+    className="w-100% font-sans text-white text-center opacity-66 hover:opacity-100  focus:animate-text-color-rainbow text-size-2rem uppercase bg-dark-900 border-none "
     {...props}
   >
     {children}
@@ -24,22 +24,33 @@ export function Menu({ ...props }: ComponentPropsWithoutRef<"section">) {
     []
   );
   return (
-    <section {...props}>
-      <h1 className="font-medium text-center py-5 text-size-4rem uppercase">
+    <section
+      {...props}
+      className={["vstack", "justify-around", "h-100%", props.className].join(
+        " "
+      )}
+    >
+      <h1 className="font-medium text-center my-1 text-size-4rem uppercase  ">
         OneDoes{" "}
         <span className="animate-text-color-rainbow">Ragdoll Masters</span>
       </h1>
-      <nav>
-        <ul>
-          <li>
-            <MenuButton onClick={willSend("PLAY")}>Play</MenuButton>
-            <MenuButton onClick={willSend("OPTIONS")}>Options</MenuButton>
-            <MenuButton onClick={willSend("REGISTER")}>Register</MenuButton>
-            <MenuButton onClick={willSend("CONTROLS")}>Controls</MenuButton>
-            <MenuButton onClick={willSend("CONTROLS")}>Controls</MenuButton>
-          </li>
-        </ul>
-      </nav>
+      <ul className="vstack items-center ">
+        <li className="w-66%">
+          <MenuButton onClick={willSend("PLAY")}>Play</MenuButton>
+        </li>
+        <li className="w-66%">
+          <MenuButton onClick={willSend("OPTIONS")}>Options</MenuButton>
+        </li>
+        <li className="w-66%">
+          <MenuButton onClick={willSend("REGISTER")}>Register</MenuButton>
+        </li>
+        <li className="w-66%">
+          <MenuButton onClick={willSend("CONTROLS")}>Controls</MenuButton>
+        </li>
+        <li className="w-66%">
+          <MenuButton onClick={willSend("CONTROLS")}>Controls</MenuButton>
+        </li>
+      </ul>
     </section>
   );
 }
