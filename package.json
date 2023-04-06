@@ -1,0 +1,31 @@
+{
+  "name": "@onedoes/ragdollmasters",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Remediation of www.ragdollsoft.com/ragdollmasters/",
+  "license": "WTFPL",
+  "author": "One Does <onedoes.inc@gmail.com> (https://onedoes.github.io/)",
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite",
+    "preview": "vite preview",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@tsconfig/strictest": "^2.0.0",
+    "@tsconfig/vite-react": "^1.0.1",
+    "@types/react": "^18.0.33",
+    "@types/react-dom": "^18.0.11",
+    "@vitejs/plugin-react": "^3.1.0",
+    "typescript": "^5.0.3",
+    "vite": "^4.2.1",
+    "vite-plugin-windicss": "^1.8.10",
+    "vitest": "^0.29.8",
+    "windicss": "^3.5.6"
+  }
+}
