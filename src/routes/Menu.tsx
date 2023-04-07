@@ -1,28 +1,13 @@
 //
 
-import { useCallback, type ComponentPropsWithoutRef, type FC } from "react";
+import { GameContext } from "@/GameContext";
+import { MenuButton } from "@/components/Button";
+import { useContext, type ComponentPropsWithoutRef } from "react";
 
 //
 
-const MenuButton: FC<ComponentPropsWithoutRef<"button">> = ({
-  children,
-  ...props
-}) => (
-  <button
-    className="w-100% font-sans text-white text-center opacity-66 hover:opacity-100  focus:animate-text-color-rainbow text-size-2rem uppercase bg-dark-900 border-none "
-    {...props}
-  >
-    {children}
-  </button>
-);
 export function Menu({ ...props }: ComponentPropsWithoutRef<"section">) {
-  // const [selected, setSelected] = useState("");
-  const willSend = useCallback(
-    (type: string) => () => {
-      console.log("lol", { type });
-    },
-    []
-  );
+  const { sendN } = useContext(GameContext);
   return (
     <section
       {...props}
@@ -36,19 +21,19 @@ export function Menu({ ...props }: ComponentPropsWithoutRef<"section">) {
       </h1>
       <ul className="vstack items-center ">
         <li className="w-66%">
-          <MenuButton onClick={willSend("PLAY")}>Play</MenuButton>
+          <MenuButton onClick={sendN("PLAY")}>Play</MenuButton>
         </li>
         <li className="w-66%">
-          <MenuButton onClick={willSend("OPTIONS")}>Options</MenuButton>
+          <MenuButton onClick={sendN("OPTIONS")}>Options</MenuButton>
         </li>
         <li className="w-66%">
-          <MenuButton onClick={willSend("REGISTER")}>Register</MenuButton>
+          <MenuButton onClick={sendN("CONTROLS")}>Controls</MenuButton>
         </li>
         <li className="w-66%">
-          <MenuButton onClick={willSend("CONTROLS")}>Controls</MenuButton>
+          <MenuButton onClick={sendN("SCORES")}>Scores</MenuButton>
         </li>
         <li className="w-66%">
-          <MenuButton onClick={willSend("CONTROLS")}>Controls</MenuButton>
+          <MenuButton onClick={sendN("ABOUT")}>About</MenuButton>
         </li>
       </ul>
     </section>

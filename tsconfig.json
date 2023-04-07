@@ -2,7 +2,11 @@
   "extends": ["@tsconfig/vite-react/tsconfig", "@tsconfig/strictest/tsconfig"],
   "compilerOptions": {
     "allowJs": false,
-    "checkJs": false
+    "checkJs": false,
+    "allowSyntheticDefaultImports": true,
+    "paths": {
+      "@/*": ["./src/*"]
+    }
     // "moduleResolution": "bundler"
   }
 }

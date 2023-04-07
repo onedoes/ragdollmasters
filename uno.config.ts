@@ -10,6 +10,7 @@ export default defineConfig({
   },
   presets: [
     presetUno(),
+    // presetAttributify({ prefixedOnly: true }), // To slow on my vscode...
     presetWebFonts({
       fonts: {
         sans: "Anton",
