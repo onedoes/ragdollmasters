@@ -13,13 +13,9 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@pixi/react": "^7.0.3",
     "@xstate/react": "^3.2.1",
-    "matter": "^0.2.0",
+    "matter-js": "^0.19.0",
     "netplayjs": "^0.4.1",
-    "phaser": "^3.55.2",
-    "pixi-viewport": "^5.0.1",
-    "pixi.js": "^7.2.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-use": "^17.4.0",
@@ -28,13 +24,14 @@
   "devDependencies": {
     "@tsconfig/strictest": "^2.0.0",
     "@tsconfig/vite-react": "^1.0.1",
+    "@types/matter-js": "^0.18.2",
     "@types/react": "^18.0.33",
     "@types/react-dom": "^18.0.11",
-    "@unocss/preset-web-fonts": "^0.50.6",
+    "@unocss/preset-web-fonts": "^0.50.7",
     "@vitejs/plugin-react": "^3.1.0",
     "@xstate/inspect": "^0.8.0",
-    "typescript": "^5.0.3",
-    "unocss": "^0.50.6",
+    "typescript": "^5.0.4",
+    "unocss": "^0.50.7",
     "vite": "^4.2.1",
     "vitest": "^0.29.8"
   }
