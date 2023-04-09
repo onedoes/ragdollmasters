@@ -1,11 +1,6 @@
 import { RenderContext, useEngine } from "@1.framework/matter4react";
-import debug from "debug";
 import { Render } from "matter-js";
 import { useEffect, useRef, useState, type PropsWithChildren } from "react";
-
-//
-
-const log = debug("@1.framework:matter4react:RenderWrapper");
 
 //
 
@@ -13,54 +8,42 @@ export function RenderWrapper({
   children,
   options = {},
 }: PropsWithChildren<Props>) {
-  // log("! render.");
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [render, setRender] = useState<Render>(null as any);
+  const [render, setRender] = useState<Render | null>(null);
   const engine = useEngine();
 
-  // useEffect(() => {
-  //   log("< useEffect.", { wid: engine.world.id });
-  //   return () => {
-  //     log("> useEffect.", { wid: engine.world.id });
-  //   };
-  // }, [engine.world.id, canvasRef.current, options]);
   useEffect(() => {
-    log("+ useEffect.", { wid: engine.world.id });
     const { current: canvas } = canvasRef;
     if (!canvas) throw new Error("0_o : <canvas> not found.");
+    if (render) return; // force
 
     const instance = Render.create({
       canvas,
-      engine,
       options,
-    });
-    Render.run(instance);
-
-    Render.lookAt(instance, {
-      min: { x: 0, y: 0 },
-      max: { x: 800, y: 600 },
+      engine,
     });
 
     setRender(instance);
-    // log("! setRender(render)", instance);
+  }, [engine.world.id, canvasRef.current, setRender]);
 
+  useEffect(() => {
+    if (!render) return;
+    Render.run(render);
     return () => {
-      log("- useEffect.");
-      // const { current: render } = renderRef;
-      // if (!canvas) throw new Error("0_o : <canvas> not found.");
-      Render.stop(instance);
+      Render.stop(render);
+      setRender(null);
     };
-  }, [engine]);
+  }, [render]);
 
-  // const screenSize = useWindowViewport();
-  // useLayoutEffect(() => {
-  //   render;
-  log("! render.", { canvasRef });
-  // }, [screenSize]);
   return (
-    <RenderContext.Provider value={render}>
-      <canvas ref={canvasRef}>{render ? children : null}</canvas>
-    </RenderContext.Provider>
+    <>
+      <canvas ref={canvasRef}></canvas>
+      {render ? (
+        <RenderContext.Provider value={render}>
+          {children}
+        </RenderContext.Provider>
+      ) : null}
+    </>
   );
 }
 

@@ -1,18 +1,12 @@
 //
 
-// import { E } from "@1.framwork/"
 import { Engine, Render, Runner } from "@1.framework/matter4react";
 import { WorldCompositeProvider } from "@1.framework/matter4react/Composite";
-import Debug from "debug";
 import {
   createContext,
   type ComponentProps,
   type PropsWithChildren,
 } from "react";
-
-//
-
-const debug = Debug("@1.framework:matter4react:Renderer");
 
 //
 
@@ -43,8 +37,6 @@ const MATTER_RUNNER_OPTIONS: NonNullable<
 export const GameContext = createContext({});
 
 export function Renderer({ children }: PropsWithChildren) {
-  debug("! render.");
-
   return (
     <Engine options={MATTER_ENGINE_OPTIONS}>
       <Render options={MATTER_RENDER_OPTIONS}>
@@ -54,31 +46,3 @@ export function Renderer({ children }: PropsWithChildren) {
     </Engine>
   );
 }
-// export class Renderer2 extends Component<PropsWithChildren> {
-//   engineRef = createRef<MatterEngine>() as MutableRefObject<MatterEngine>;
-
-//   override componentDidMount(): void {
-//     const { current: engine } = this.engineRef;
-//     debug("< Renderer.componentDidMount.", { engine });
-//   }
-
-//   override componentWillUnmount(): void {
-//     const { current: engine } = this.engineRef;
-//     debug("> Renderer.componentWillUnmount.", { engine });
-//   }
-
-//   override render() {
-//     const { children } = this.props;
-//     debug("! render.");
-
-//     return (
-//       <Engine options={MATTER_ENGINE_OPTIONS}>
-//         <Render
-//           options={{ background: "#666", wireframes: false, hasBounds: true }}
-//         />
-//         <RRunner />
-//         {children}
-//       </Engine>
-//     );
-//   }
-// }

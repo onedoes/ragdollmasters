@@ -4,7 +4,6 @@ import { useActor } from "@xstate/react";
 import { Suspense, lazy, useContext, useMemo } from "react";
 import { GameContext, GameContextProvider, type States } from "./GameContext";
 import { Loading } from "./components/Loading";
-// import { Menu } from "./routes/Menu";
 
 //
 
@@ -21,16 +20,20 @@ const Battle1Player = lazy(() =>
     default: Battle1Player,
   }))
 );
+
+//
+
 const routes = new Map<States, typeof Menu>([
   ["idle", Menu],
   ["play_mode.1 Player", Battle1Player],
   ["play_mode", GameMode],
 ]);
+
+//
+
 function Router() {
   const { gameM } = useContext(GameContext);
   const [gameA] = useActor(gameM);
-  // const state = gameA.value as States;
-  // console.log({ state });
 
   const match = useMemo(
     () => Array.from(routes).find(([state]) => gameA.matches(state)),
