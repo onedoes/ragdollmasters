@@ -1,100 +1,38 @@
 //
 
 import { Renderer } from "@/components/Renderer";
-import { useWindowViewport } from "@/components/useWindowViewport";
-import { useEngine } from "@1.framework/matter4react";
-import {
-  Bodies,
-  Composite,
-  Render,
-  Runner,
-  type IRendererOptions,
-  type IRunnerOptions,
-} from "matter-js";
-import {
-  useLayoutEffect,
-  useRef,
-  useState,
-  type ComponentPropsWithoutRef,
-} from "react";
+import { Circle, SurroundingWalls, useEngine } from "@1.framework/matter4react";
+import { Bodies, Body, Composite } from "matter-js";
+import { useLayoutEffect, type ComponentPropsWithoutRef } from "react";
 import { useBoolean, useInterval } from "react-use";
 
 //
 
-function RRender({ options = {} }: { options?: IRendererOptions }) {
-  const elementRef = useRef<HTMLCanvasElement>(null);
-  const [render, setRender] = useState<Render>();
+function LOL({ x, y }: { x: number; y: number }) {
   const engine = useEngine();
-
-  useLayoutEffect(() => {
-    console.log("> Render.useLayoutEffect.", { wid: engine.world.id });
-    const { current: canvas } = elementRef;
-    if (!canvas) throw new Error("0_o : <canvas> not found.");
-
-    const render = Render.create({
-      canvas,
-      engine,
-      options,
-    });
-    setRender(render);
-    Render.run(render);
-
-    Render.lookAt(render, {
-      min: { x: 0, y: 0 },
-      max: { x: 800, y: 600 },
-    });
-    return () => {
-      console.log("< Render.useLayoutEffect.", { wid: engine.world.id });
-      return Render.stop(render);
-    };
-  }, [elementRef, engine, options]);
-
-  const screenSize = useWindowViewport();
-  useLayoutEffect(() => {
-    render;
-  }, [screenSize]);
-
-  return <canvas ref={elementRef} />;
-}
-function RRunner({ options = {} }: { options?: IRunnerOptions }) {
-  const engine = useEngine();
-
-  useLayoutEffect(() => {
-    console.log("> Runner.useLayoutEffect.", { wid: engine.world.id });
-    const runner = Runner.create(options);
-    Runner.run(runner, engine);
-    return () => {
-      console.log("< Runner.useLayoutEffect.", { wid: engine.world.id });
-      Runner.stop(runner);
-    };
-  }, [engine, options]);
-
-  return null;
-}
-
-function LOL() {
-  const engine = useEngine();
-  const world = engine.world;
+  const { world } = engine;
   const WallBodyStyle = { fillStyle: "#111" };
   const Player1BodyStyle = { fillStyle: "#eee" };
 
   useLayoutEffect(() => {
-    console.log("> LOL.useLayoutEffect...", {
+    console.log("+ LOL.useLayoutEffect..", {
       wid: world.id,
       bodies_count: world.bodies,
       world,
     });
     console.log("---");
-    const playerHead = Composite.add(
-      world,
-      Bodies.circle(50, 50, 15, { restitution: 1, render: Player1BodyStyle })
-    );
-    // return () => {
-    //   console.log("destroy previous worlddd");
-    //   Composite.remove(world, playerHead);
-    // };
+    const playerHead = Bodies.circle(x, y, 15, {
+      restitution: 1,
+      render: Player1BodyStyle,
+    });
+    Composite.add(world, playerHead);
+
     return () => {
-      console.log("< LOL.useLayoutEffect...", { wid: engine.world.id });
+      console.log("- LOL.useLayoutEffect...", {
+        wid: engine.world.id,
+        world,
+        playerHead,
+      });
       Composite.remove(world, playerHead);
     };
   }, [world.id]);
@@ -134,12 +72,68 @@ function LOL() {
 
 export function LeveL1() {
   const [isVisible, toggleIsVisible] = useBoolean(false);
-  useInterval(() => {
-    toggleIsVisible();
-  }, 1000);
+  // useInterval(() => {
+  //   console.log("---");
+  //   toggleIsVisible();
+  // }, 6_666);
+
+  // window.toggleIsVisible = toggleIsVisible;
+
   return (
     <Renderer>
-      <>{isVisible ? <LOL /> : null}</>
+      <SurroundingWalls thick={50} />
+
+      {isVisible ? (
+        <Circle
+          x={200}
+          y={10}
+          radius={15}
+          options={{ render: { fillStyle: "#F00" } }}
+        />
+      ) : null}
+      <Circle
+        x={500}
+        y={55}
+        radius={20}
+        options={{
+          // mass: 1,
+          angle: Math.PI * Math.random(),
+          friction: 0,
+          frictionAir: 0,
+          restitution: 1,
+          render: { fillStyle: "#00F" },
+        }}
+        ref={(body) => {
+          if (!body) return;
+          body.label = "Blue";
+          Body.setVelocity(body, { x: -5, y: 0 });
+        }}
+      />
+      <Circle
+        x={400}
+        y={25}
+        radius={15}
+        options={{ render: { fillStyle: "#F0F" } }}
+        ref={(body) => {
+          if (!body) return;
+          body.label = "Pinky";
+        }}
+      />
+      <LOL x={300} y={100} />
+    </Renderer>
+  );
+}
+
+export function LeveL2() {
+  const [isVisible, toggleIsVisible] = useBoolean(false);
+  useInterval(() => {
+    toggleIsVisible();
+  }, 4444);
+
+  return (
+    <Renderer>
+      {isVisible ? <LOL x={60} y={10} /> : null}
+      <LOL x={50} y={50} />
     </Renderer>
   );
 }
@@ -158,6 +152,10 @@ export function Battle1Player({
   // }, [app, viewport]);
 
   // const blurFilter = useMemo(() => new BlurFilter(0), []);
+  const [nextLevel, toggleIsVisible] = useBoolean(false);
+  useInterval(() => {
+    toggleIsVisible();
+  }, 11_1111);
 
   return (
     <div className="h-100% overflow-hidden">

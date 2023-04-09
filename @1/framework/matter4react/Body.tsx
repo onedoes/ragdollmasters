@@ -1,22 +1,69 @@
 //
 
-import { Bodies, Body as MatterBody } from "matter-js";
-import { type PropsWithRef, type Ref } from "react";
-
-export function Body({ ref }: PropsWithRef<Props>) {
-  // const engine = useEngine();
-  // useEffect(() => {
-  //   const body = ref!.current!;
-  //   World.add(engine.world, body);
-  // }, [ref]);
-
-  return null;
-}
+import debug from "debug";
+import { Composite } from "matter-js";
+import {
+  Component,
+  useContext,
+  useDebugValue,
+  useEffect,
+  type ContextType,
+  type PropsWithRef,
+} from "react";
+import { CompositeContext } from "./Composite";
 
 //
 
-type BodiesRectangleParameters = Parameters<typeof Bodies.rectangle>;
-type Props = { ref?: Ref<MatterBody> };
+const log = debug("@1.framework:matter4react:Body");
+
+//
+class BodyWrapper3 extends Component<PropsWithRef<Props>> {
+  // override state: Readonly<{ engine?: MatterEngine }> = {};
+  static override contextType = CompositeContext;
+  declare context: ContextType<typeof CompositeContext>;
+
+  override componentDidMount(): void {
+    const { objectRef } = this.props;
+    const parent = this.context;
+    log("+ componentDidMount.", { parent, objectRef });
+    Composite.add(parent, objectRef);
+    log("+ Composite.add", { parent, objectRef });
+  }
+  override componentWillUnmount(): void {
+    const { objectRef } = this.props;
+    const parent = this.context;
+    log("- componentWillUnmount.", { parent, objectRef });
+    Composite.remove(parent, objectRef);
+    log("- Composite.remove", { parent, objectRef });
+  }
+  override render() {
+    return null;
+  }
+}
+export function BodyWrapper({ objectRef }: PropsWithRef<Props>) {
+  log("! render..");
+  const parent = useContext(CompositeContext);
+  useDebugValue(parent);
+  useDebugValue(objectRef);
+
+  useEffect(() => {
+    log("+ useEffect.", { parent, objectRef });
+    Composite.add(parent, objectRef);
+    log("Composite.add", { parent, objectRef });
+    return () => {
+      log("- useEffect.", { parent, objectRef });
+      Composite.remove(parent, objectRef);
+      log("Composite.remove", { parent, objectRef });
+    };
+  }, [parent, objectRef]);
+  return null;
+}
+
+export { BodyWrapper as Body };
+//
+
+type CompositeAddParameters = Parameters<typeof Composite.remove>;
+type Props = { objectRef: CompositeAddParameters[1] };
 
 // &
 // Partial<Body>;

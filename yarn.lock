@@ -591,13 +591,15 @@ __metadata:
   dependencies:
     "@tsconfig/strictest": ^2.0.0
     "@tsconfig/vite-react": ^1.0.1
-    "@types/matter-js": ^0
+    "@types/debug": ^4
+    "@types/matter-js": ^0.18.2
     "@types/react": ^18.0.33
     "@types/react-dom": ^18.0.11
     "@unocss/preset-web-fonts": ^0.50.7
     "@vitejs/plugin-react": ^3.1.0
     "@xstate/inspect": ^0.8.0
     "@xstate/react": ^3.2.1
+    debug: ^4.3.4
     matter-js: ^0.19.0
     netplayjs: ^0.4.1
     react: ^18.2.0
@@ -671,6 +673,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/debug@npm:^4":
+  version: 4.1.7
+  resolution: "@types/debug@npm:4.1.7"
+  dependencies:
+    "@types/ms": "*"
+  checksum: 0a7b89d8ed72526858f0b61c6fd81f477853e8c4415bb97f48b1b5545248d2ae389931680b94b393b993a7cfe893537a200647d93defe6d87159b96812305adc
+  languageName: node
+  linkType: hard
+
 "@types/estree@npm:^1.0.0":
   version: 1.0.0
   resolution: "@types/estree@npm:1.0.0"
@@ -685,10 +696,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/matter-js@npm:^0":
+"@types/matter-js@npm:^0.18.2":
   version: 0.18.2
   resolution: "@types/matter-js@npm:0.18.2"
   checksum: 8997d889e2c4fe10eda084e93d5dbd264b3888ea0c33c767d26e2cbb515a5c96717fc16b933a6067583eb5e59c0292187ea229fb2f6eaa2d9a749ec8327496c7
+  languageName: node
+  linkType: hard
+
+"@types/ms@npm:*":
+  version: 0.7.31
+  resolution: "@types/ms@npm:0.7.31"
+  checksum: daadd354aedde024cce6f5aa873fefe7b71b22cd0e28632a69e8b677aeb48ae8caa1c60e5919bb781df040d116b01cb4316335167a3fc0ef6a63fa3614c0f6da
   languageName: node
   linkType: hard
 

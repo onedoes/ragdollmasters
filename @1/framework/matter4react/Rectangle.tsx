@@ -1,19 +1,34 @@
 //
 
+import debug from "debug";
 import { Bodies } from "matter-js";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Body } from "./Body";
+
+//
+
+const log = debug("@1.framework:matter4react:Rectangle");
 
 //
 
 export function Rectangle({ x, y, width, height, options }: Props) {
-  const ref = useRef<Body>();
-  useEffect(() => {
-    Bodies.rectangle(x, y, width, height, options);
-  }, []);
+  const [object, setObject] = useState<ReturnType<
+    typeof Bodies.rectangle
+  > | null>(null);
+  const optionsRef = useRef(options);
 
-  // return ref.current ? (
-  //   <Body {...props} ref={ref} key={ref.current.id} />
-  // ) : null;
+  useEffect(() => {
+    log("+ useEffect.", [x, y, width, height, options]);
+    const body = Bodies.rectangle(x, y, width, height, options);
+    // body.label;
+    log("!!! ", body.id, body.label, { body });
+    setObject(body);
+    return () => setObject(null);
+  }, [x, y, width, height, optionsRef.current]);
+
+  log("! render..");
+  if (!object) return null;
+  return <Body objectRef={object} />;
 }
 
 //
