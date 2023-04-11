@@ -1,59 +1,80 @@
 //
 
-import { Composite } from "matter-js";
+import debug from "debug";
+import Matter from "matter-js";
 import {
-  createContext,
+  forwardRef,
   useContext,
   useDebugValue,
-  useLayoutEffect,
+  useEffect,
+  useImperativeHandle,
   useState,
   type PropsWithChildren,
 } from "react";
-import { useEngine } from "./EngineContext";
+import { CompositeContext } from "./CompositeContext";
 
 //
 
-export const CompositeContext = createContext<Composite>(null as any);
-
-export const WorldCompositeProvider = ({ children }: PropsWithChildren) => {
-  const engine = useEngine();
-  return (
-    <CompositeContext.Provider value={engine.world}>
-      {children}
-    </CompositeContext.Provider>
-  );
-};
+const log = debug("@1.framework:matter4react:Composite");
 
 //
 
-function CompositeWrapper({ options, children }: PropsWithChildren<Props>) {
+const Composite_ = forwardRef<Ref, Props>(function CompositeW(
+  { options, children },
+  ref
+) {
+  log("! render", options?.label);
   const parent = useContext(CompositeContext);
-  const [composite, setComposite] = useState<Composite | null>(null);
+  const [composite] = useState(Matter.Composite.create(options));
+
   useDebugValue(parent);
   useDebugValue(composite);
 
-  useLayoutEffect(() => {
-    const composite = Composite.create(options);
-    setComposite(composite);
-    Composite.add(parent, composite);
-    return () => {
-      Composite.remove(parent, composite);
-    };
-  }, [parent]);
-
-  //
-
-  if (!composite) return null;
-
   return (
-    <CompositeContext.Provider value={composite}>
-      {children}
-    </CompositeContext.Provider>
+    <>
+      <Composite.add object={composite} ref={ref} />
+      <CompositeContext.Provider value={composite}>
+        {children}
+      </CompositeContext.Provider>
+    </>
   );
-}
+});
 
-type Props = {
-  options?: Parameters<typeof Composite.create>[0];
-};
+//
 
-export { CompositeWrapper as Composite };
+const add = forwardRef<RemoveParameters[1], { object: RemoveParameters[1] }>(
+  function add({ object }, ref) {
+    log("add ! render", object.label);
+    const parent = useContext(CompositeContext);
+
+    useEffect(() => {
+      log("add + useEffect", object.label);
+      Matter.Composite.add(parent, object);
+
+      return () => {
+        log("add - useEffect", object.label);
+        Matter.Composite.remove(parent, object);
+      };
+    }, [parent.id, object.id]);
+
+    useImperativeHandle(ref, () => object, [parent.id, object.id]);
+
+    return null;
+  }
+);
+
+//
+
+export const Composite = Object.assign(Composite_, {
+  add,
+});
+
+//
+
+type CreateParameters = Parameters<typeof Matter.Composite.create>;
+type CreateReturnType = ReturnType<typeof Matter.Composite.create>;
+type RemoveParameters = Parameters<typeof Matter.Composite.remove>;
+type Ref = CreateReturnType;
+type Props = PropsWithChildren<{
+  options?: CreateParameters[0];
+}>;

@@ -41,7 +41,11 @@ export const GameFlow = createMachine({
             "PLAY_2CO-OP": "2 Players CO-OP",
           },
         },
-        "1 Player": {},
+        "1 Player": {
+          on: {
+            BACK: "#GameFlow.idle",
+          },
+        },
         "2 Players VS": {},
         "2 Players CO-OP": {},
       },

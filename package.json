@@ -32,6 +32,7 @@
     "@unocss/preset-web-fonts": "^0.50.7",
     "@vitejs/plugin-react": "^3.1.0",
     "@xstate/inspect": "^0.8.0",
+    "ts-toolbelt": "^9.6.0",
     "typescript": "^5.0.4",
     "unocss": "^0.50.7",
     "vite": "^4.2.1",

@@ -1,14 +1,13 @@
 //
 
+import debug from "debug";
 import { Bodies } from "matter-js";
-import {
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from "react";
-import { Body } from "./Body";
+import { forwardRef, useMemo, useRef } from "react";
+import { Composite } from "./Composite";
+
+//
+
+const log = debug("@1.framework:matter4react:Circle");
 
 //
 
@@ -16,32 +15,14 @@ export const Circle = forwardRef<BodiesCircleReturnType, Props>(function Circle(
   { x, y, radius, options },
   ref
 ) {
-  const [object, setObject] = useState<BodiesCircleReturnType | null>(null);
+  log("! render", options?.label);
   const optionsRef = useRef(options);
+  const object = useMemo(
+    () => Bodies.circle(x, y, radius, options),
+    [x, y, radius, optionsRef.current]
+  );
 
-  useImperativeHandle(ref, () => object!, [object]);
-
-  useEffect(() => {
-    const body = Bodies.circle(x, y, radius, options);
-    setObject(body);
-    return () => setObject(null);
-  }, [x, y, radius, optionsRef.current]);
-
-  // const object = useMemo(
-  //   () => Bodies.circle(x, y, radius, options),
-  //   [x, y, radius, options]
-  // );
-  // log(object.id);
-
-  // useLayoutEffect(() => {
-  //   const body = ref.current!;
-  //   Body.setPosition(body, { x: sizes.x, y: sizes.y });
-  // }, [ref, sizes.x, sizes.y]);
-  // return ref.current ? (
-  //   <Body {...props} ref={ref} key={ref.current.id} />
-  // ) : null;
-  if (!object) return null;
-  return <Body objectRef={object} />;
+  return <Composite.add object={object} ref={ref} />;
 });
 
 //
@@ -53,5 +34,4 @@ type Props = {
   y: BodiesCircleParameters[1];
   radius: BodiesCircleParameters[2];
   options?: BodiesCircleParameters[3];
-  ref: {};
 };
