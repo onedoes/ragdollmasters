@@ -25,17 +25,17 @@
   "devDependencies": {
     "@tsconfig/strictest": "^2.0.0",
     "@tsconfig/vite-react": "^1.0.1",
-    "@types/debug": "^4",
+    "@types/debug": "^4.1.7",
     "@types/matter-js": "^0.18.2",
-    "@types/react": "^18.0.33",
+    "@types/react": "^18.0.34",
     "@types/react-dom": "^18.0.11",
-    "@unocss/preset-web-fonts": "^0.50.7",
+    "@unocss/preset-web-fonts": "^0.51.4",
     "@vitejs/plugin-react": "^3.1.0",
     "@xstate/inspect": "^0.8.0",
     "ts-toolbelt": "^9.6.0",
     "typescript": "^5.0.4",
-    "unocss": "^0.50.7",
+    "unocss": "^0.51.4",
     "vite": "^4.2.1",
-    "vitest": "^0.29.8"
+    "vitest": "^0.30.1"
   }
 }
