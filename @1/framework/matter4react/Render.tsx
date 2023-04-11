@@ -15,7 +15,7 @@ export function RenderWrapper({
   useEffect(() => {
     const { current: canvas } = canvasRef;
     if (!canvas) throw new Error("0_o : <canvas> not found.");
-    if (render) return; // force
+    if (render) return;
 
     const instance = Render.create({
       canvas,

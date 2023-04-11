@@ -30,4 +30,4 @@ export const Constraint = forwardRef<Matter.Constraint, Props>(
 //
 
 type Options = Parameters<typeof Matter.Constraint.create>[0];
-type Props = { options: Options }; //{ bodyA: Options["bodyA"] | null; bodyB: Options["bodyB"] | null };
+type Props = { options: Options };

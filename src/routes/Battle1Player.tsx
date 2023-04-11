@@ -4,7 +4,11 @@ import { GameContext } from "@/GameContext";
 import { Ragdoll } from "@/components/Ragdoll";
 import { Renderer } from "@/components/Renderer";
 import { Viewport } from "@/components/Viewport";
-import { PlayerInput, SurroundingWalls } from "@1.framework/matter4react";
+import {
+  PlayerInput,
+  SurroundingWalls,
+  useEventBeforeUpdate,
+} from "@1.framework/matter4react";
 import debug from "debug";
 import { Body, Vector } from "matter-js";
 import { useContext, useRef, type ComponentPropsWithoutRef } from "react";
@@ -17,10 +21,12 @@ const log = debug("@1.framework:matter4react:LeveL1");
 //
 
 const SPEED = 10 / 66;
-
 export function LeveL1() {
   const protagonists = useRef<Body[]>([]);
   const playerBody = useRef<Body>(null);
+  const opponentBody = useRef<Body>(null);
+
+  //
 
   const onMove = (vector: Vector) => {
     if (!playerBody.current) return;
@@ -30,8 +36,25 @@ export function LeveL1() {
     Body.setVelocity(body, force);
   };
 
+  const opponentBehavior = () => {
+    if (!opponentBody.current) return;
+    if (!playerBody.current) return;
+    const { current: body } = opponentBody;
+    const { position: target } = playerBody.current;
+
+    const vector = Vector.normalise(Vector.sub(body.position, target));
+
+    const force = Vector.sub(body.velocity, Vector.mult(vector, SPEED / 3));
+
+    Body.setVelocity(body, force);
+  };
+
+  //
+
+  useEventBeforeUpdate(opponentBehavior, [playerBody, opponentBody]);
+
   return (
-    <Renderer>
+    <>
       <PlayerInput map="gamepad" event="move" call={onMove} />
       <Viewport
         protagonists={protagonists.current}
@@ -45,7 +68,8 @@ export function LeveL1() {
         options={{ render: { fillStyle: "#333" } }}
       />
       <Ragdoll x={222} y={222} ref={playerBody} />
-    </Renderer>
+      <Ragdoll x={666} y={222} ref={opponentBody} />
+    </>
   );
 }
 
@@ -68,7 +92,9 @@ export function Battle1Player({
 
   return (
     <section className="h-100% overflow-hidden">
-      <LeveL1 />
+      <Renderer>
+        <LeveL1 />
+      </Renderer>
     </section>
   );
 }
