@@ -61,6 +61,227 @@ class Particle {
 //   log("handleWindowResize", render);
 // };
 // window.addEventListener("resize", (event) => {})
+const RRRChain = ({
+  x,
+  y,
+  radius,
+  group,
+  xLength = 1,
+  yLength = 2,
+}: {
+  x: number;
+  y: number;
+  radius: number;
+  group: number;
+  xLength?: number;
+  yLength?: number;
+}) => {
+  const { bodies } = Matter.Composites.stack(
+    x,
+    y,
+    xLength,
+    yLength,
+    0,
+    0,
+    (x: number, y: number) => {
+      return Matter.Bodies.circle(x, y, radius, {
+        collisionFilter: { group },
+      });
+    }
+  );
+  const constraints = [
+    // Matter.Constraint.create({
+    //   bodyA: bodies.at(0),
+    //   // pointA: { x: 0, y: radius * 2 },
+    //   bodyB: bodies.at(-1), // the top circle of the torso stack
+    //   // pointB: { x: 0, y: -radius },
+    //   stiffness: 1,
+    //   // length: radius * 2,
+    // }),
+  ] as Matter.Constraint[];
+  for (const [bodyId, bodyB] of bodies.entries()) {
+    if (bodyId === 0) continue;
+    const bodyA = bodies[bodyId - 1]!;
+    const common = {
+      bodyA,
+      bodyB,
+      // damping: 0.5,
+      stiffness: 1,
+      // length: radius * 2,
+    } as Matter.IConstraintDefinition;
+    constraints.push(
+      Matter.Constraint.create({
+        ...common,
+        // stiffness: 0.01,
+        length: radius * 2,
+      })
+    );
+    constraints.push(
+      Matter.Constraint.create({
+        ...common,
+        pointA: { x: 0, y: radius },
+        pointB: { x: 0, y: -radius },
+        // stiffness: 0.01,
+      })
+    );
+    // constraints.push(
+    //   Matter.Constraint.create({
+    //     ...common,
+    //     pointA: { x: radius, y: 0 },
+    //     pointB: { x: radius, y: 0 },
+    //   })
+    // );
+    // constraints.push(
+    //   Matter.Constraint.create({
+    //     ...common,
+    //     pointA: { x: -radius, y: 0 },
+    //     pointB: { x: -radius, y: 0 },
+    //   })
+    // );
+  }
+
+  return { bodies, constraints };
+};
+const RRRR = ({ x, y, radius }: { x: number; y: number; radius: number }) => {
+  const group = Matter.Body.nextGroup(true);
+  const head = Matter.Bodies.circle(x, y, radius * 2, {
+    collisionFilter: { group },
+  });
+
+  //
+  const torsoLength = 5;
+  const torso = RRRChain({
+    x: x - radius,
+    y: y + radius * 2,
+    radius,
+    group,
+    yLength: torsoLength,
+  });
+
+  //
+
+  const upperRightArm = RRRChain({
+    x: x - radius,
+    y: y + radius * 4,
+    radius,
+    group,
+  });
+  const lowerRightArm = RRRChain({
+    x: upperRightArm.bodies.at(0)!.position.x,
+    y: upperRightArm.bodies.at(0)!.position.y + radius * 2,
+    radius,
+    group,
+  });
+
+  //
+
+  const upperLeftArm = RRRChain({
+    x: x - radius,
+    y: y + radius * 4,
+    radius,
+    group,
+  });
+  const lowerLeftArm = RRRChain({
+    x: upperLeftArm.bodies.at(0)!.position.x - radius,
+    y: upperLeftArm.bodies.at(0)!.position.y + radius * 3,
+    radius,
+    group,
+  });
+
+  //
+
+  const constraints = [
+    Matter.Constraint.create({
+      bodyA: head,
+      pointA: { x: -radius * 2, y: 0 },
+      bodyB: torso.bodies.at(0),
+      pointB: { x: 0, y: 0 },
+      stiffness: 1,
+      length: 0,
+    }),
+    Matter.Constraint.create({
+      bodyA: head,
+      bodyB: torso.bodies.at(0),
+      pointB: { x: 0, y: 0 },
+      stiffness: 1,
+      length: radius * 2,
+    }),
+    // Matter.Constraint.create({
+    //   bodyA: head,
+    //   bodyB: torso.bodies.at(-1),
+    //   stiffness: 0.5,
+    //   length: radius * 6,
+    // }),
+    ...torso.constraints,
+
+    //
+    //
+    //
+
+    Matter.Constraint.create({
+      bodyA: torso.bodies.at(1),
+      // pointA: { x: -radius, y: 0 },
+      bodyB: upperRightArm.bodies.at(0),
+      // pointB: { x: radius, y: 0 },
+      stiffness: 1,
+      // length: 1,
+    }),
+    // Matter.Constraint.create({
+    //   bodyA: torso.bodies.at(0),
+    //   pointA: { x: -radius, y: 0 },
+    //   bodyB: upperRightArm.bodies.at(0),
+    //   pointB: { x: 0, y: radius },
+    //   stiffness: 1,
+    // }),
+
+    //
+    ...upperRightArm.constraints,
+    Matter.Constraint.create({
+      bodyA: upperRightArm.bodies.at(-1),
+      bodyB: lowerRightArm.bodies.at(0),
+      stiffness: 1,
+    }),
+    // Matter.Constraint.create({
+    //   bodyA: upperRightArm.bodies.at(-1),
+    //   pointA: { x: 0, y: radius },
+    //   bodyB: lowerRightArm.bodies.at(0),
+    //   pointB: { x: 0, y: -radius },
+    //   stiffness: 1,
+    // }),
+
+    ...lowerRightArm.constraints,
+    //
+
+    Matter.Constraint.create({
+      bodyA: torso.bodies.at(1),
+      // pointA: { x: -radius, y: 0 },
+      bodyB: upperLeftArm.bodies.at(0),
+      // pointB: { x: radius, y: 0 },
+      stiffness: 1,
+      // length: 1,
+    }),
+    ...upperLeftArm.constraints,
+    Matter.Constraint.create({
+      bodyA: upperLeftArm.bodies.at(-1),
+      bodyB: lowerLeftArm.bodies.at(0),
+      stiffness: 0.01,
+    }),
+    ...lowerLeftArm.constraints,
+  ];
+  return {
+    head,
+    bodies: [
+      head,
+      ...torso.bodies,
+      ...upperRightArm.bodies,
+      ...lowerRightArm.bodies,
+      ...upperLeftArm.bodies,
+      ...lowerLeftArm.bodies,
+    ],
+    constraints,
+    group,
+  };
+};
 const P1 = forwardRef<Body, { x: number; y: number }>(function P1(
   { x, y }: any,
   ref
@@ -71,9 +292,11 @@ const P1 = forwardRef<Body, { x: number; y: number }>(function P1(
   const particules = useRef<Particle[]>([]);
   const object = useMemo(() => {
     let { r, g, b } = rgb.current;
+    const radius = 10;
+
     const fillStyle = to.hex([r, g, b]);
 
-    const head = Matter.Bodies.circle(x, y, 20, {
+    const head = Matter.Bodies.circle(x, y, radius * 2, {
       label: "head",
       // density: 0.04,
       // restitution: 0.5,
@@ -82,8 +305,37 @@ const P1 = forwardRef<Body, { x: number; y: number }>(function P1(
       restitution: 0.99,
       render: { fillStyle },
     });
-    return Matter.Body.create({ parts: [head], label: "test" });
+    //
+    // NOT
+    //
+    // const torso = Matter.Composites.stack(
+    //   x,
+    //   y,
+    //   1,
+    //   4,
+    //   0,
+    //   0,
+    //   (x: number, y: number) => {
+    //     return Matter.Bodies.circle(x - radius, y, radius, {
+    //       label: "torso" + y,
+    //       density: 0.001,
+    //       restitution: 0.99,
+    //       // density: 0.001,
+    //       // restitution: 0.5,
+    //       // friction: 0.5,
+    //     });
+    //   }
+    // );
+    return Matter.Body.create({
+      parts: [head],
+      label: "test",
+    });
   }, [x, y]);
+  const { head, constraints, bodies } = useMemo(
+    () => RRRR({ x, y, radius: 10 }),
+    [x, y]
+  );
+  const parts = bodies;
   useEventAfterUpdate(
     (event) => {
       // if (impactedBody.current.length) {
@@ -170,14 +422,17 @@ const P1 = forwardRef<Body, { x: number; y: number }>(function P1(
         if (bodyA.isStatic || bodyB.isStatic) {
           continue; // ignore collisions with static bodies
         }
+        if (bodyA.collisionFilter.group === bodyB.collisionFilter.group) {
+          continue; // ignore collisions with self
+        }
         if (
           bodyA.collisionFilter.category === dead ||
           bodyB.collisionFilter.category === dead
         ) {
           continue; // ignore collisions with dead bodies
         }
-        const isBodyA = object.parts.includes(bodyA);
-        const isBodyB = object.parts.includes(bodyB);
+        const isBodyA = parts.includes(bodyA);
+        const isBodyB = parts.includes(bodyB);
         if (isBodyB) onCollide(bodyB, bodyA, pair);
         if (isBodyA) onCollide(bodyA, bodyB, pair);
         //
@@ -213,7 +468,19 @@ const P1 = forwardRef<Body, { x: number; y: number }>(function P1(
     },
     [object.id]
   );
-  return <Composite.add object={object} ref={ref} />;
+  return (
+    <>
+      <Composite.add object={head} ref={ref} />
+      {bodies
+        .filter((body) => body !== head)
+        .map((body, index) => (
+          <Composite.add key={index} object={body} />
+        ))}
+      {constraints.map((constraint, index) => (
+        <Composite.add key={index} object={constraint} />
+      ))}
+    </>
+  );
 });
 export function LeveL1() {
   log("!");
@@ -227,8 +494,12 @@ export function LeveL1() {
 
   const onMove = (vector: Vector) => {
     if (!playerBody.current) return;
-    const { current: body } = playerBody;
-    const force = Vector.sub(body.velocity, Vector.mult(vector, SPEED));
+    const { current: bodies } = playerBody;
+    const body = bodies.parts[0]!;
+    const force = Vector.sub(
+      body.velocity,
+      Vector.mult(vector, body.mass * SPEED)
+    );
 
     Body.setVelocity(body, force);
   };
@@ -367,9 +638,10 @@ export function LeveL1() {
     if (!p1.current) return;
     const { current: body } = p1;
     const force = Vector.sub(body.velocity, Vector.mult(vector, SPEED));
-
+    const mass = body.mass * 2;
+    // console.log({ mass });
     // Body.applyForce(body, body.position, force);
-    Body.applyForce(body, body.position, Vector.div(vector, -10_500));
+    Body.applyForce(body, body.position, Vector.div(vector, -10_000 / mass));
   };
   return (
     <>

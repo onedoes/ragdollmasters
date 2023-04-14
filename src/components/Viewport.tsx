@@ -12,7 +12,7 @@ const log = debug("@1.framework:matter4react:Viewport");
 
 //
 
-const padding = Vector.create(50, 50);
+const padding = Vector.create(90, 90);
 export function Viewport({ extents: _extents, protagonists }: Props) {
   log("!");
   const render = useRender();
