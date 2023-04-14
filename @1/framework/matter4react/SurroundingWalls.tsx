@@ -1,19 +1,35 @@
 //
 
-import { useMemo, useRef, type ComponentProps } from "react";
+import debug from "debug";
+import defaults from "defaults";
+import Matter from "matter-js";
+import { useMemo, type ComponentProps } from "react";
 import { Composite } from "./Composite";
 import { Rectangle } from "./Rectangle";
-import { useRender } from "./RenderContext";
+
+//
+
+const log = debug("@1.framework:matter4react:SurroundingWalls");
 
 //
 
 export function SurroundingWalls(props: Props) {
   const {
+    top,
+    right,
+    bottom,
+    left,
+    thick,
     bounds: { min, max },
-  } = useRender();
-
-  const { top, right, bottom, left, thick, options } = { thick: 5, ...props };
-  const optionsRef = useRef({ isStatic: true, ...(options ?? {}) });
+  } = { thick: 5, ...props };
+  log("!", { min, max });
+  const options: Matter.IChamferableBodyDefinition = defaults(
+    (props.options as Record<string, unknown>) ?? {},
+    {
+      isStatic: true,
+      label: "Wall",
+    } satisfies Matter.IChamferableBodyDefinition
+  );
 
   const rectangleProps: WallsProps = useMemo(
     () => [
@@ -36,13 +52,13 @@ export function SurroundingWalls(props: Props) {
       // left
       { x: min.x + (left ?? 0), y: max.y / 2, width: thick * 2, height: max.y },
     ],
-    [min, max, top, right, bottom, left, thick]
+    [min.x, min.y, max.x, max.y, top, right, bottom, left, thick]
   );
 
   return (
     <Composite options={{ label: "Walls" }}>
       {rectangleProps.map((props, id) => (
-        <Rectangle key={id} {...props} options={optionsRef.current} />
+        <Rectangle key={id} {...props} options={options} />
       ))}
     </Composite>
   );
@@ -58,6 +74,7 @@ type Props = {
   bottom?: number;
   left?: number;
   thick?: number;
+  bounds: Matter.Bounds;
   options?: ComponentProps<typeof Rectangle>["options"];
 };
 

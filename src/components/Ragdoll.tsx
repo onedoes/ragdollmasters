@@ -24,7 +24,7 @@ const log = debug("@1.framework:matter4react:Ragdoll");
 //
 
 const RagdollArm = forwardRef<Matter.Composite, Props & { radius: number }>(
-  function RagdollChest({ x, y, radius }, ref) {
+  function RagdollArm({ x, y, radius }, ref) {
     const chest = useMemo(() => {
       // const group = Matter.Body.nextGroup(true);
 
@@ -61,29 +61,55 @@ const RagdollArm = forwardRef<Matter.Composite, Props & { radius: number }>(
 const RagdollChest = forwardRef<Matter.Composite, Props & { radius: number }>(
   function RagdollChest({ x, y, radius }, ref) {
     const chest = useMemo(() => {
-      // const group = Matter.Body.nextGroup(true);
+      const group = Matter.Body.nextGroup(true);
 
-      const stack = Matter.Composites.stack(
+      var stack = Matter.Composites.stack(
         x,
         y,
+        13,
         1,
-        5,
-        0,
-        0,
+        10,
+        10,
         (x: number, y: number) => {
-          return Matter.Bodies.circle(x, y, radius, {
-            label: "Chest",
-            // collisionFilter: { group: group },
+          return Matter.Bodies.rectangle(x - 20, y, 50, 20, {
+            collisionFilter: { group: group },
+            chamfer: { radius: 5 },
           });
         }
       );
 
-      Matter.Composites.chain(stack, 0, 0, 0, 0, {
+      Matter.Composites.chain(stack, 0.3, 0, -0.3, 0, {
         stiffness: 1,
-        damping: 0,
-        // length: 2,
-        render: { type: "line" },
-      } as Matter.IConstraintDefinition);
+        length: 0,
+      });
+      // Composite.add(ropeC, Constraint.create({
+      //     bodyB: ropeC.bodies[0],
+      //     pointB: { x: -20, y: 0 },
+      //     pointA: { x: ropeC.bodies[0].position.x, y: ropeC.bodies[0].position.y },
+      //     stiffness: 0.5
+      // }));
+      // const stack = Matter.Composites.stack(
+      //   x,
+      //   y,
+      //   1,
+      //   5,
+      //   0,
+      //   0,
+      //   (x: number, y: number) => {
+      //     return Matter.Bodies.circle(x, y, radius, {
+      //       label: "Chest",
+      //       collisionFilter: { category: group },
+      //     });
+      //   }
+      // );
+
+      // Matter.Composites.chain(stack, 0, 0, 0, 0, {
+      //   stiffness: 1,
+      //   // damping: 0.01,
+      //   angularStiffness: 1,
+      //   // length: 0,
+      //   render: { type: "line" },
+      // } as Matter.IConstraintDefinition);
 
       return stack;
     }, [x, y, radius, ref]);
@@ -92,6 +118,36 @@ const RagdollChest = forwardRef<Matter.Composite, Props & { radius: number }>(
   }
 );
 
+const RagDollBodyPart = forwardRef<
+  Matter.Composite,
+  Props & { radius: number; length: number; group: number }
+>(function RagDollBodyPart({ x, y, radius, length, group }, ref) {
+  const chest = useMemo(() => {
+    var stack = Matter.Composites.stack(
+      x,
+      y,
+      1,
+      1,
+      10,
+      10,
+      (x: number, y: number) => {
+        return Matter.Bodies.rectangle(x - 10, y - 10, 20, 50, {
+          collisionFilter: { group },
+          chamfer: { radius },
+        });
+      }
+    );
+
+    Matter.Composites.chain(stack, 0.5, 0, -0.5, 0, {
+      // stiffness: 0,
+      // length: 0.5,
+    });
+
+    return stack;
+  }, [x, y, radius, ref]);
+
+  return <Composite.add object={chest} ref={ref} />;
+});
 export const Ragdoll = forwardRef<Matter.Body, Props>(function Ragdoll(
   { x, y },
   ref
@@ -148,12 +204,16 @@ export const Ragdoll = forwardRef<Matter.Body, Props>(function Ragdoll(
         .map(([bodyA, bodyB], index) => (
           <Constraint
             key={index}
-            options={{
-              bodyA,
-              bodyB,
-              stiffness: 1,
-              damping: 0,
-            }}
+            options={
+              {
+                bodyA,
+                bodyB,
+                angularStiffness: 1,
+                stiffness: 0.01,
+                // damping: 0,
+                length: 0,
+              } as any
+            }
           />
         )),
     [head, chest, clavicle, rightArm, leftArm, leftFit, rightFit]
@@ -180,8 +240,15 @@ export const Ragdoll = forwardRef<Matter.Body, Props>(function Ragdoll(
         options={{ ...options, label: "Head" }}
         ref={setHead}
       />
-      <RagdollChest x={x} y={y + radius * 2} radius={radius} ref={setChest} />
-
+      <RagDollBodyPart
+        x={x}
+        y={y + radius * 2}
+        radius={radius}
+        length={5}
+        group={group}
+        ref={setChest}
+      />
+      {/*
       <RagdollArm
         x={x + radius * 2}
         y={y + radius * 4}
@@ -205,7 +272,7 @@ export const Ragdoll = forwardRef<Matter.Body, Props>(function Ragdoll(
         y={y + radius * 10}
         radius={radius}
         ref={setLeftFit}
-      />
+      />*/}
       {constraints}
     </Composite>
   );

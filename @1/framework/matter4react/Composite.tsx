@@ -23,7 +23,7 @@ const Composite_ = forwardRef<Ref, Props>(function CompositeW(
   { options, children },
   ref
 ) {
-  log("! render", options?.label);
+  log("!", options?.label);
   const parent = useContext(CompositeContext);
   const [composite] = useState(Matter.Composite.create(options));
 

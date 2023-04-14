@@ -1,56 +1,65 @@
 import { RenderContext, useEngine } from "@1.framework/matter4react";
-import { Render } from "matter-js";
-import { useEffect, useRef, useState, type PropsWithChildren } from "react";
+import debug from "debug";
+import Matter from "matter-js";
+import { useRef, useState, type PropsWithChildren } from "react";
+import { useDeepCompareEffect } from "react-use";
 
 //
 
-export function RenderWrapper({
-  children,
-  options = {},
-}: PropsWithChildren<Props>) {
+const log = debug("@1.framework:matter4react:Render");
+
+//
+
+export function Render({ children, options = {} }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [render, setRender] = useState<Render | null>(null);
+  const [render, setRender] = useState<Matter.Render | null>(null);
   const engine = useEngine();
+  log("!", { engineId: engine.world.id });
 
-  useEffect(() => {
-    const { current: canvas } = canvasRef;
-    if (!canvas) throw new Error("0_o : <canvas> not found.");
-    if (render) return;
-
-    const instance = Render.create({
-      canvas,
+  useDeepCompareEffect(() => {
+    log("+ useDeepCompareEffect", [
+      canvasRef.current,
+      engine.world.id,
       options,
-      engine,
+      setRender,
+    ]);
+
+    const { current: canvas } = canvasRef;
+    if (!canvas) throw new Error("0_o : <canvas> not found..");
+
+    const instance = Matter.Render.create({
+      ...options,
+      canvas,
+      // https://github.com/liabru/matter-js/issues/241
+      // @ts-ignore
+      engine: undefined,
     });
 
+    // @ts-ignore
+    instance.engine = engine;
     setRender(instance);
-  }, [engine.world.id, canvasRef.current, setRender]);
-
-  useEffect(() => {
-    if (!render) return;
-    Render.run(render);
+    Matter.Render.run(instance);
     return () => {
-      Render.stop(render);
+      log("- useDeepCompareEffect", { instance });
+      Matter.Render.stop(instance);
       setRender(null);
     };
-  }, [render]);
+  }, [canvasRef.current, engine.world.id, options, setRender]);
 
   return (
     <>
       <canvas ref={canvasRef}></canvas>
-      {render ? (
+      {render && (
         <RenderContext.Provider value={render}>
           {children}
         </RenderContext.Provider>
-      ) : null}
+      )}
     </>
   );
 }
 
-export { RenderWrapper as Render };
-
 //
 
-type Props = {
-  options?: Parameters<typeof Render.create>[0]["options"];
-};
+type Props = PropsWithChildren<{
+  options?: Omit<Matter.IRenderDefinition, "engine" | "canvas">;
+}>;

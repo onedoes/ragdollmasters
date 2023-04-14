@@ -1,19 +1,20 @@
 //
 
+import debug from "debug";
 import { Bodies } from "matter-js";
-import { forwardRef, useMemo, useRef } from "react";
+import { forwardRef } from "react";
 import { Composite } from "./Composite";
+
+//
+
+const log = debug("@1.framework:matter4react:Rectangle");
 
 //
 
 export const Rectangle = forwardRef<BodiesRectangleReturnType, Props>(
   function Rectangle({ x, y, width, height, options }, ref) {
-    const optionsRef = useRef(options);
-    const object = useMemo(
-      () => Bodies.rectangle(x, y, width, height, options),
-      [x, y, width, height, optionsRef.current]
-    );
-
+    log("!", { x, y, width, height, options });
+    const object = Bodies.rectangle(x, y, width, height, options);
     return <Composite.add object={object} ref={ref} />;
   }
 );

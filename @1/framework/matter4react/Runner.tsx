@@ -1,31 +1,35 @@
 //
 
 import { useEngine } from "@1.framework/matter4react";
-import { Runner } from "matter-js";
-import { useEffect, useRef, useState } from "react";
+import debug from "debug";
+import Matter from "matter-js";
+import { useDeepCompareEffect } from "react-use";
 
 //
 
-function RunnerWrapper({
-  options = {},
-}: {
-  options?: Parameters<typeof Runner.create>[0];
-}) {
-  const engine = useEngine();
-  const [, setRunner] = useState<Runner | null>(null);
-  const optionsRef = useRef(options);
+const log = debug("@1.framework:matter4react:Runner");
 
-  useEffect(() => {
-    const instance = Runner.create(options);
-    Runner.run(instance, engine);
-    setRunner(instance);
+//
+
+export function Runner({ options = {} }: Props) {
+  log("!");
+  const engine = useEngine();
+
+  useDeepCompareEffect(() => {
+    log("+ useDeepCompareEffect", [engine.world.id, options]);
+    const instance = Matter.Runner.create(options);
+    Matter.Runner.run(instance, engine);
     return () => {
-      Runner.stop(instance);
-      setRunner(null);
+      log("- useDeepCompareEffect", { instance });
+      Matter.Runner.stop(instance);
     };
-  }, [engine.world.id, optionsRef]);
+  }, [engine.world.id, options]);
 
   return null;
 }
 
-export { RunnerWrapper as Runner };
+//
+
+type Props = {
+  options?: Matter.IRunnerOptions;
+};
