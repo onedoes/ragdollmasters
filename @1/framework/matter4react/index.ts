@@ -12,5 +12,6 @@ export * from "./RenderContext";
 export * from "./Runner";
 export * from "./SurroundingWalls";
 export * from "./useEvent";
+export * from "./useEventAfterUpdate";
 export * from "./useEventBeforeUpdate";
 export * from "./useEventCollisionStart";

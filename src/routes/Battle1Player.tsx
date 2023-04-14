@@ -8,6 +8,7 @@ import {
   Composite,
   PlayerInput,
   SurroundingWalls,
+  useEventAfterUpdate,
   useEventBeforeUpdate,
   useEventCollisionStart,
 } from "@1.framework/matter4react";
@@ -32,6 +33,30 @@ const log = debug("src:routes:LeveL1");
 //
 
 const SPEED = 1 / 5;
+const dead = Matter.Body.nextCategory();
+const players = Matter.Body.nextCategory();
+// const parti = Matter.Body.nextCategory()
+class Particle {
+  body: Body;
+  life = 1;
+  constructor(x: number, y: number, r: number) {
+    this.body = Matter.Bodies.circle(x, y, r, {
+      friction: 0,
+      restitution: 0.5,
+      frictionAir: 0.001,
+      density: 0.001,
+      render: { fillStyle: "#f00", opacity: 1 },
+      collisionFilter: { category: 0 },
+    });
+    // Matter.World.add(world, this.body);
+  }
+  update(event: Matter.IEventTimestamped<Matter.Engine>) {
+    const timeScale = ((event as any).delta || 1000 / 60) / 10_000;
+    this.life -= timeScale;
+    this.body.render.opacity = this.life;
+  }
+}
+
 // const handleWindowResize = (render: Render) => {
 //   log("handleWindowResize", render);
 // };
@@ -43,20 +68,32 @@ const P1 = forwardRef<Body, { x: number; y: number }>(function P1(
   const rgb = useRef({ r: 255, g: 255, b: 255 });
   const impact = useRef(0);
   const impactedBody = useRef<[Body, number][]>([]);
+  const particules = useRef<Particle[]>([]);
   const object = useMemo(() => {
     let { r, g, b } = rgb.current;
     const fillStyle = to.hex([r, g, b]);
+
     const head = Matter.Bodies.circle(x, y, 20, {
       label: "head",
-      // density: 1,
-      // friction: 0.1,
-      // restitution: 0.8,
+      // density: 0.04,
+      // restitution: 0.5,
+      // friction: 0.5,
       density: 0.001,
       restitution: 0.99,
       render: { fillStyle },
     });
     return Matter.Body.create({ parts: [head], label: "test" });
   }, [x, y]);
+  useEventAfterUpdate(
+    (event) => {
+      // if (impactedBody.current.length) {
+      //   event.source.timing.timeScale = 0.5;
+      // } else {
+      //   event.source.timing.timeScale = 1;
+      // }
+    },
+    [object.id]
+  );
   useEventBeforeUpdate(
     (event) => {
       const timeScale = ((event as any).delta || 1000 / 60) / 1000;
@@ -74,6 +111,34 @@ const P1 = forwardRef<Body, { x: number; y: number }>(function P1(
           impactedBody.current.push([body, impact - timeScale]);
         }
       }
+
+      if (!impactedBody.current.length && event.source.timing.timeScale < 1) {
+        event.source.timing.timeScale = 1;
+      } else {
+        const lastImpact = impactedBody.current.at(-1);
+        const [, ratio] = lastImpact || [null, 0];
+
+        event.source.timing.timeScale = Math.max(
+          0.33,
+          event.source.timing.timeScale -
+            (ratio / timeScale) * impactedBody.current.length
+        );
+      }
+
+      const dead_particules = [] as Particle[];
+      const active_particules = particules.current;
+      particules.current = [];
+      for (const p of active_particules) {
+        p.update(event);
+        if (p.life <= 0) {
+          dead_particules.push(p);
+          continue;
+        }
+        particules.current.push(p);
+      }
+      for (const p of dead_particules) {
+        Matter.Composite.remove(event.source.world, p.body);
+      }
     },
     [object.id]
   );
@@ -83,6 +148,7 @@ const P1 = forwardRef<Body, { x: number; y: number }>(function P1(
     //   `Ì, ${object.label} (${object.id}), collided with ${other.label} (${other.id})`
     // );
     impactedBody.current.push([body, 1]);
+
     // const repulsion = Vector.mult(pair.collision.tangent, -5);
     // Body.setVelocity(
     //   body,
@@ -101,10 +167,47 @@ const P1 = forwardRef<Body, { x: number; y: number }>(function P1(
 
       for (const pair of pairs) {
         const { bodyA, bodyB } = pair;
+        if (bodyA.isStatic || bodyB.isStatic) {
+          continue; // ignore collisions with static bodies
+        }
+        if (
+          bodyA.collisionFilter.category === dead ||
+          bodyB.collisionFilter.category === dead
+        ) {
+          continue; // ignore collisions with dead bodies
+        }
         const isBodyA = object.parts.includes(bodyA);
         const isBodyB = object.parts.includes(bodyB);
-        if (isBodyA) onCollide(bodyA, bodyB, pair);
         if (isBodyB) onCollide(bodyB, bodyA, pair);
+        if (isBodyA) onCollide(bodyA, bodyB, pair);
+        //
+        let ppair: [Body, Body] | undefined;
+        if (isBodyB) ppair = [bodyB, bodyA];
+        if (isBodyA) ppair = [bodyA, bodyB];
+        if (!ppair) continue;
+        //
+        const [body, otherbody] = ppair;
+        const contact = pair.collision.supports.at(0);
+        if (!contact) continue;
+
+        const imp = 1 / 10_000;
+        const impactVelocity =
+          Matter.Vector.magnitude(pair.collision.penetration) * 2;
+        const particleCount = Math.max(50, Math.floor(impactVelocity));
+        particules.current = Array.from({ length: particleCount })
+          .map(() => new Particle(contact.x, contact.y, 2))
+          .map((p) => {
+            Matter.Composite.add(event.source.world, p.body);
+            Matter.Body.applyForce(p.body, p.body.position, {
+              x: Matter.Common.random(-imp, imp),
+              y: Matter.Common.random(-imp, imp),
+            });
+            return p;
+          })
+          .concat(particules.current);
+        // const blood = new Particle(contact.x, contact.y, 2);
+        // particules.current.push(blood);
+        // }
       }
       // log(pairs);
     },

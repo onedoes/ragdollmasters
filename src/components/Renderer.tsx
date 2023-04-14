@@ -46,10 +46,10 @@ export function Renderer({
       },
     },
     options: {
-      background: "#333",
+      background: "#333z",
       hasBounds: true,
       showCollisions: true,
-      // showDebug: true,
+      showDebug: true,
       wireframes: false,
       showBounds: true,
     },
