@@ -28,7 +28,7 @@ export const GameContext = createContext(
 //
 
 export function GameContextProvider({ children }: PropsWithChildren) {
-  const game_flow = useInterpret(GameFlow, { devTools: true });
+  const game_flow = useInterpret(GameFlow);
   const sendN =
     (...params: Parameters<typeof game_flow["send"]>) =>
     () =>
