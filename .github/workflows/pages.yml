@@ -1,4 +1,4 @@
-# 
+#
 
 name: Deploy to Pages
 
@@ -33,6 +33,11 @@ jobs:
         with:
           node-version: "latest"
           cache: yarn
+      - name: Install Yarn@stable
+        run: |
+          corepack enable
+          corepack prepare yarn@stable --activate
+          yarn --version
       - name: Restore cache
         uses: actions/cache@v3
         with:
@@ -45,7 +50,7 @@ jobs:
             ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}-
       - name: Install dependencies
         run: yarn install
-      - name: Build 
+      - name: Build
         run: yarn build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
