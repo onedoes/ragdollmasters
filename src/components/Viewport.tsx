@@ -17,7 +17,6 @@ export function Viewport({ extents: _extents, protagonists }: Props) {
   log("!");
   const render = useRender();
 
-  const extents = _extents ?? { min: { x: 0, y: 0 }, max: { x: 0, y: 0 } };
   const resize = () => {
     const [width, height] = [window.innerWidth, window.innerHeight];
     // TODO(douglasduteil): remove this when Render.setSize is released
@@ -39,26 +38,6 @@ export function Viewport({ extents: _extents, protagonists }: Props) {
     },
     [render, protagonists]
   );
-  // console.log(protagonists);
-  // useEffect(() => {
-  //   const beforeRender = () => {
-  //     // Render.lookAt(render, protagonists, padding, true);
-  //   };
-  //   Events.on(render, "beforeRender", beforeRender);
-
-  //   return () => Events.off(render, "beforeRender", beforeRender);
-  // }, [render]);
-  // useEvent(
-  //   "beforeRender",
-  //   () => {
-  //     log("beforeRender", protagonists);
-  //     if (!protagonists.length) {
-  //       Matter.Render.lookAt(render, protagonists, padding, true);
-  //       return;
-  //     }
-  //   },
-  //   []
-  // );
   return null;
 }
 

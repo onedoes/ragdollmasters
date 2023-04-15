@@ -34,23 +34,33 @@ export function SurroundingWalls(props: Props) {
   const rectangleProps: WallsProps = useMemo(
     () => [
       // top
-      { x: max.x / 2, y: min.y + (top ?? 0), width: max.x, height: thick * 2 },
+      {
+        x: max.x / 2,
+        y: min.y - thick / 2 + (top ?? 0),
+        width: max.x + thick,
+        height: thick,
+      },
       // right
       {
-        x: max.x - (right ?? 0),
+        x: max.x + thick / 2 - (right ?? 0),
         y: max.y / 2,
-        width: thick * 2,
+        width: thick,
         height: max.y,
       },
       // bottom
       {
         x: max.x / 2,
-        y: max.y - (bottom ?? 0),
-        width: max.x,
-        height: thick * 2,
+        y: max.y + thick / 2 - (bottom ?? 0),
+        width: max.x + thick,
+        height: thick,
       },
       // left
-      { x: min.x + (left ?? 0), y: max.y / 2, width: thick * 2, height: max.y },
+      {
+        x: min.x - thick / 2 + (left ?? 0),
+        y: max.y / 2,
+        width: thick,
+        height: max.y,
+      },
     ],
     [min.x, min.y, max.x, max.y, top, right, bottom, left, thick]
   );

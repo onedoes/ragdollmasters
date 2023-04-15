@@ -30,34 +30,41 @@ export function Renderer({
   const engineOps: Matter.IEngineDefinition = defaults(
     engine as Record<string, unknown>,
     {
-      gravity: { x: 0, y: 1 / 100, scale: 1 / 1_000 },
+      gravity: { x: 0, y: 1 / 10, scale: 1 / 1_000 },
+      constraintIterations: 20,
     } satisfies Matter.IEngineDefinition
   );
 
   const renderOps = defaults(render as Record<string, unknown>, {
-    bounds: {
-      min: {
-        x: 0,
-        y: 0,
-      },
-      max: {
-        x: 666,
-        y: 666,
-      },
-    },
+    // bounds: {
+    //   min: {
+    //     x: 0,
+    //     y: 0,
+    //   },
+    //   max: {
+    //     x: 6666,
+    //     y: 6666,
+    //   },
+    // },
+
     options: {
-      background: "#333z",
-      hasBounds: true,
-      showCollisions: true,
+      background: "#111",
+
+      // hasBounds: true,
+      // showSleeping: true,
+      // showVelocity: true,
+
+      // showCollisions: true,
       showDebug: true,
       wireframes: false,
-      showBounds: true,
+      // showBounds: true,
     },
   } satisfies ComponentProps<typeof Render>["options"]);
 
   const runnerOps: Matter.IRunnerOptions = defaults(
     runner as Record<string, unknown>,
     { enabled: true } satisfies Matter.IRunnerOptions
+    // { enabled: false } satisfies Matter.IRunnerOptions
   );
 
   return (
