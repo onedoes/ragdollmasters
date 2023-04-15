@@ -21,7 +21,20 @@ export const Button: FC<ComponentPropsWithoutRef<"button">> = ({
     {...props}
     className={[
       props.className,
-      "font-sans text-white text-center opacity-66 hover:opacity-100  focus:animate-text-color-rainbow text-size-2rem uppercase bg-dark-900 border-none ",
+      [
+        "bg-dark-900",
+        "border-none",
+        "focus:animate-text-color-rainbow",
+        "font-sans",
+        "hover:not-disabled:opacity-100",
+        "disabled:line-through",
+        "disabled:line-through",
+        "opacity-66",
+        "text-center",
+        "text-size-2rem",
+        "text-white",
+        "uppercase",
+      ].join(" "),
     ].join(" ")}
   >
     {children}

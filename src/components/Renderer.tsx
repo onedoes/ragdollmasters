@@ -55,7 +55,7 @@ export function Renderer({
       // showVelocity: true,
 
       // showCollisions: true,
-      showDebug: true,
+      // showDebug: true,
       wireframes: false,
       // showBounds: true,
     },

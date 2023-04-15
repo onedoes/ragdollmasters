@@ -4,11 +4,15 @@ import { GameContext } from "@/GameContext";
 import { Back } from "@/components/Back";
 import { MenuButton } from "@/components/Button";
 import { useContext, type ComponentPropsWithoutRef } from "react";
+import { useKeyPressEvent } from "react-use";
 
 //
 
 export function GameMode({ ...props }: ComponentPropsWithoutRef<"section">) {
   const { sendN } = useContext(GameContext);
+
+  useKeyPressEvent("Escape", sendN("BACK"));
+
   return (
     <div className="vstack h-100%">
       <Back />

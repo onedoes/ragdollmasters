@@ -24,16 +24,24 @@ export function Menu({ ...props }: ComponentPropsWithoutRef<"section">) {
           <MenuButton onClick={sendN("PLAY")}>Play</MenuButton>
         </li>
         <li className="w-66%">
-          <MenuButton onClick={sendN("OPTIONS")}>Options</MenuButton>
+          <MenuButton disabled onClick={sendN("OPTIONS")}>
+            Options
+          </MenuButton>
         </li>
         <li className="w-66%">
-          <MenuButton onClick={sendN("CONTROLS")}>Controls</MenuButton>
+          <MenuButton disabled onClick={sendN("_CONTROLS")}>
+            Controls
+          </MenuButton>
         </li>
         <li className="w-66%">
-          <MenuButton onClick={sendN("SCORES")}>Scores</MenuButton>
+          <MenuButton disabled onClick={sendN("_SCORES")}>
+            Scores
+          </MenuButton>
         </li>
         <li className="w-66%">
-          <MenuButton onClick={sendN("ABOUT")}>About</MenuButton>
+          <MenuButton disabled onClick={sendN("_ABOUT")}>
+            About
+          </MenuButton>
         </li>
       </ul>
     </section>
