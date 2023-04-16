@@ -8,6 +8,6 @@ export function moveBody(body: Body) {
       Vector.mult(vector, body.mass * SPEED)
     );
 
-    Body.applyForce(body, body.position, Vector.mult(vector, -0.005));
+    Body.applyForce(body, body.position, Vector.mult(vector, -15 / 10_500));
   };
 }
