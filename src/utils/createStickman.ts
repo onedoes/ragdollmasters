@@ -112,6 +112,7 @@ export function createStickman(
   });
 
   const radius = 10 * scale;
+  const flex = 1 / 10_000;
 
   //
   // HEAD
@@ -148,14 +149,21 @@ export function createStickman(
   });
   // chest.bodies.at(0)!.collisionFilter.group = head_group;
 
-  const head_x_chest = Matter.Constraint.create({
-    bodyA: head,
-    pointA: { x: 0, y: radius * 2 },
-    bodyB: chest.bodies.at(0),
-    pointB: { x: 0, y: -radius },
-    stiffness: 1,
-    damping: 0,
-  });
+  const head_x_chest = [
+    Matter.Constraint.create({
+      bodyA: head,
+      pointA: { x: 0, y: radius * 2 },
+      bodyB: chest.bodies.at(0),
+      pointB: { x: 0, y: -radius },
+      stiffness: 1,
+      damping: 0,
+    }),
+    Matter.Constraint.create({
+      bodyA: chest.bodies.at(-1),
+      bodyB: chest.bodies.at(0),
+      stiffness: 1 / 100,
+    }),
+  ];
 
   //#endregion
 
@@ -326,6 +334,23 @@ export function createStickman(
 
   //#endregion
 
+  const head_x_arms = [
+    Matter.Constraint.create({
+      bodyA: head,
+      bodyB: upperRightArm.bodies.at(0),
+      stiffness: flex,
+      // damping: 0,
+      // length: radius * 8,
+    }),
+    Matter.Constraint.create({
+      bodyA: head,
+      bodyB: upperLeftArm.bodies.at(-1),
+      stiffness: flex,
+      // damping: 0,
+      // length: radius * 8,
+    }),
+  ];
+
   const leg_group = Matter.Body.nextGroup(true);
 
   //#region Left Leg
@@ -359,6 +384,15 @@ export function createStickman(
       stiffness: 1,
       damping: 0,
       length: 0,
+    }),
+
+    Matter.Constraint.create({
+      bodyA: chest.bodies.at(-1),
+      // pointA: { x: radius, y: 0 },
+      bodyB: upperLeftLeg.bodies.at(-1),
+      // pointB: { x: -radius, y: 0 },
+      stiffness: 1,
+      // damping: 0,
     }),
     // Matter.Constraint.create({
     //   bodyA: upperLeftLeg.bodies.at(-1),
@@ -436,14 +470,26 @@ export function createStickman(
       damping: 0,
       length: 0,
     }),
-    // Matter.Constraint.create({
-    //   bodyA: chest.bodies.at(0),
-    //   pointA: { x: radius, y: 0 },
-    //   bodyB: upperRightLeg.bodies.at(0),
-    //   pointB: { x: -radius, y: 0 },
-    //   stiffness: 1,
-    //   damping: 0,
-    // }),
+    Matter.Constraint.create({
+      bodyA: upperRightLeg.bodies.at(0),
+      bodyB: chest.bodies.at(-1),
+    }),
+    Matter.Constraint.create({
+      bodyA: upperRightLeg.bodies.at(0),
+      // pointA: { x: -radius, y: -radius },
+      bodyB: chest.bodies.at(-2),
+      // pointB: { x: 0, y: radius },
+      // stiffness: 1,
+      // damping: 0,
+    }),
+    Matter.Constraint.create({
+      bodyA: chest.bodies.at(-1),
+      // pointA: { x: radius, y: 0 },
+      bodyB: upperRightLeg.bodies.at(0),
+      // pointB: { x: -radius, y: 0 },
+      stiffness: 1,
+      damping: 0,
+    }),
   ];
 
   // //
@@ -495,6 +541,7 @@ export function createStickman(
       length: 0,
     }),
   ];
+
   //
 
   return Matter.Composite.create({
@@ -513,7 +560,7 @@ export function createStickman(
       ...lowerRightLeg.bodies,
     ],
     constraints: [
-      head_x_chest,
+      ...head_x_chest,
       ...chest.constraints,
       //
       ...upperLeftArm_x_body,
@@ -525,6 +572,8 @@ export function createStickman(
       ...upperRightArm.constraints,
       ...upperRightArm_x_lowerRightArm,
       ...lowerRightArm.constraints,
+      //
+      ...head_x_arms,
       //
       ...upperLeftLeg_x_body,
       ...upperLeftLeg.constraints,
