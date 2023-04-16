@@ -1,34 +1,17 @@
+//
+
 import defaults from "defaults";
 import Matter from "matter-js";
 
-type BodyPartType = "head" | "body" | "limb";
+//
 
 interface BodyPartOptions {
   x: number;
   y: number;
   radius: number;
   length?: number;
-
   options?: Matter.IBodyDefinition;
   constraint?: Matter.IConstraintDefinition;
-}
-
-interface LimbOptions extends BodyPartOptions {
-  length: number;
-}
-
-function createCircleBody(
-  x: number,
-  y: number,
-  radius: number,
-  options?: Matter.IBodyDefinition
-): Matter.Body {
-  return Matter.Bodies.circle(x, y, radius, {
-    ...options,
-    collisionFilter: {
-      group: -1,
-    },
-  });
 }
 
 function createStick(_options: BodyPartOptions) {
@@ -116,48 +99,6 @@ function createBody(_options: BodyPartOptions) {
       // }),
     ]);
   return { bodies, constraints };
-}
-
-function createLimb(
-  options: LimbOptions
-): [[Matter.Body, Matter.Body], [Matter.Constraint, Matter.Constraint]] {
-  const startX = options.x;
-  const startY = options.y;
-  const endX = startX;
-  const endY = startY + options.length;
-  const bodyA = createCircleBody(
-    startX,
-    startY,
-    options.radius,
-    options.options
-  );
-  const bodyB = createCircleBody(endX, endY, options.radius, options.options);
-  const constraintOptions = {
-    stiffness: 0.9,
-    length: options.length,
-    damping: 0.1,
-  };
-
-  const constraintA = Matter.Constraint.create({
-    bodyA: bodyA,
-    pointA: { x: 0, y: options.radius },
-    bodyB: bodyB,
-    pointB: { x: 0, y: -options.radius },
-    ...constraintOptions,
-  });
-
-  const constraintB = Matter.Constraint.create({
-    bodyA: bodyA,
-    pointA: { x: 0, y: -options.radius },
-    bodyB: bodyB,
-    pointB: { x: 0, y: options.radius },
-    ...constraintOptions,
-  });
-
-  return [
-    [bodyA, bodyB],
-    [constraintA, constraintB],
-  ];
 }
 
 export function createStickman(
