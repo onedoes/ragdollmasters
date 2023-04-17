@@ -614,6 +614,7 @@ __metadata:
     "@tsconfig/vite-react": ^1.0.1
     "@types/color-string": ^1
     "@types/debug": ^4.1.7
+    "@types/eases": ^1
     "@types/matter-js": ^0.18.2
     "@types/react": ^18.0.35
     "@types/react-dom": ^18.0.11
@@ -624,6 +625,7 @@ __metadata:
     color-string: ^1.9.1
     debug: ^4.3.4
     defaults: ^2.0.1
+    eases: ^1.0.8
     matter-js: ^0.19.0
     netplayjs: ^0.4.1
     react: ^18.2.0
@@ -711,6 +713,13 @@ __metadata:
   dependencies:
     "@types/ms": "*"
   checksum: 0a7b89d8ed72526858f0b61c6fd81f477853e8c4415bb97f48b1b5545248d2ae389931680b94b393b993a7cfe893537a200647d93defe6d87159b96812305adc
+  languageName: node
+  linkType: hard
+
+"@types/eases@npm:^1":
+  version: 1.0.2
+  resolution: "@types/eases@npm:1.0.2"
+  checksum: 0486dcc2f1bb89a552a9ff98fa4f8bc3f6ec9736acba83d62017b5dd8619f9b7be9998021bbb28e5319bc861f3d4b03f92cc2bd79a90f59e7fbd542ce4e5b226
   languageName: node
   linkType: hard
 
@@ -1730,6 +1739,13 @@ __metadata:
   version: 0.1.2
   resolution: "duplexer@npm:0.1.2"
   checksum: 62ba61a830c56801db28ff6305c7d289b6dc9f859054e8c982abd8ee0b0a14d2e9a8e7d086ffee12e868d43e2bbe8a964be55ddbd8c8957714c87373c7a4f9b0
+  languageName: node
+  linkType: hard
+
+"eases@npm:^1.0.8":
+  version: 1.0.8
+  resolution: "eases@npm:1.0.8"
+  checksum: 9ba61ce774a692ee318c3d20fefce6d54593114fb8b81fabbf5f01c4c3162bd78265025a48cdeac117ef11ca92e709260ca6338ef8befde18bfb62cefab63838
   languageName: node
   linkType: hard
 

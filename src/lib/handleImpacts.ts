@@ -3,6 +3,7 @@
 import { useEventBeforeUpdate } from "@1.framework/matter4react";
 import * as colorString from "color-string";
 import debug from "debug";
+import { cubicIn } from "eases";
 import { Body, Composite, Vector } from "matter-js";
 import { useRef, type DependencyList } from "react";
 import { isSaveBody } from "./isSaveBody";
@@ -16,7 +17,8 @@ export const log = debug("@:lib:useImpactHandler");
 //
 
 type ImpactStrengthPair = [Body, number, Vector];
-const SPEED = -25; // 1 / 5_000; //6666;
+const SPEED = -30; // 1 / 5_000; //6666;
+const TIMESCALE_LIMIT = 0.22;
 
 export function useImpactHandler(
   composites: Composite[],
@@ -30,15 +32,7 @@ export function useImpactHandler(
     composites,
     {
       onCollisionStart: (event, { pair: { bodyA, bodyB, collision } }) => {
-        // log("useEventCollisionStart", event);
         const bodyId_to_color = body_colors_ref.current;
-
-        // if (
-        //   bodyA.collisionFilter.category === dead ||
-        //   bodyB.collisionFilter.category === dead
-        // ) {
-        //   continue; // ignore collisions with dead bodies
-        // }
 
         const contact = collision.supports.at(0);
         if (!contact) return;
@@ -52,14 +46,6 @@ export function useImpactHandler(
           bodyId_to_color.set(bodyA.id, bodyA.render.fillStyle!);
         bodyId_to_color.has(bodyB.id) ||
           bodyId_to_color.set(bodyB.id, bodyB.render.fillStyle!);
-
-        // log(Vector.mult(impulse, bodyB.mass * ratio));
-        // Body.applyForce(bodyA, bodyA.position, Vector.mult(impulse, ratio));
-        // Body.applyForce(
-        //   bodyB,
-        //   bodyB.position,
-        //   Vector.mult(Vector.neg(impulse), ratio) // bodyB.mass * ratio)
-        // );
 
         // No bleeding from stickman safe bodies labels
         if ([bodyA, bodyB].every(isSaveBody)) {
@@ -82,7 +68,6 @@ export function useImpactHandler(
   );
 
   useEventBeforeUpdate((event) => {
-    // log("useEventBeforeUpdate", event);
     const timeScale = (event as any).delta / 1_000;
     const bodyId_to_color = body_colors_ref.current;
 
@@ -113,19 +98,36 @@ export function useImpactHandler(
       //
 
       moveBody(body)(event, vec, SPEED);
-      // Body.applyForce(body, body.position, Vector.mult(vec, ratio));
 
       //
 
       if (strength > 0) {
         nextImpactedBody.push([
           body,
-          strength - timeScale / 3,
+          strength - timeScale,
           Vector.mult(vec, strength),
         ]);
       }
     }
 
+    //
+
+    if (!nextImpactedBody.length && event.source.timing.timeScale < 0.66) {
+      event.source.timing.timeScale = 1;
+    } else if (nextImpactedBody.length) {
+      const lastImpact = nextImpactedBody.at(-1);
+      const [, ratio] = lastImpact || [null, 0];
+      // log(easingFactor);
+      // log("Math.exp(1 - ratio)", ratio, Math.exp(1 - ratio), Math.exp(ratio));
+
+      // slow motion effect
+
+      event.source.timing.timeScale = Math.min(
+        1,
+        Math.max(TIMESCALE_LIMIT, cubicIn(1 - ratio * ratio))
+      );
+      // log(ratio, event.source.timing.timeScale);
+    }
     //
 
     impactedBody.current = nextImpactedBody;
