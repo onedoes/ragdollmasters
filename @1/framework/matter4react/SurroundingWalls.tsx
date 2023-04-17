@@ -45,7 +45,7 @@ export function SurroundingWalls(props: Props) {
         x: max.x + thick / 2 - (right ?? 0),
         y: max.y / 2,
         width: thick,
-        height: max.y,
+        height: max.y + thick,
       },
       // bottom
       {
@@ -59,7 +59,7 @@ export function SurroundingWalls(props: Props) {
         x: min.x - thick / 2 + (left ?? 0),
         y: max.y / 2,
         width: thick,
-        height: max.y,
+        height: max.y + thick,
       },
     ],
     [min.x, min.y, max.x, max.y, top, right, bottom, left, thick]

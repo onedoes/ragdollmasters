@@ -9,7 +9,7 @@ import { LeveL1 } from "./LeveL1";
 
 //
 
-export const log = debug("src:routes:LeveL1");
+export const log = debug("@:routes:Battle1Player");
 
 //
 

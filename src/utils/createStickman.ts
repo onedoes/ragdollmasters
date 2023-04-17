@@ -595,5 +595,6 @@ export function createStickman(
       //
       ...upperLeftLeg_x_upperRightLeg,
     ],
+    label: "Stickman",
   });
 }
