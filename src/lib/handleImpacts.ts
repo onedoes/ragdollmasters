@@ -66,11 +66,15 @@ export function useImpactHandler(
           return;
         }
 
-        impactedBody.current.push([bodyA, 1, Vector.mult(impulse, bodyB.mass)]);
+        impactedBody.current.push([
+          bodyA,
+          1,
+          Vector.mult(impulse, 10 * bodyB.mass),
+        ]);
         impactedBody.current.push([
           bodyB,
           1,
-          Vector.mult(Vector.neg(impulse), bodyA.mass),
+          Vector.mult(Vector.neg(impulse), 10 * bodyA.mass),
         ]);
       },
     },

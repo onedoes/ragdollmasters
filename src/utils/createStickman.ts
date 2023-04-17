@@ -47,12 +47,13 @@ function createStick(_options: BodyPartOptions) {
         pointB: { x: -radius, y: 0 },
         damping: 0,
         length: 0,
-        stiffness: 1,
+        stiffness: 0.5,
       }),
     ]);
 
   return { bodies, constraints };
 }
+
 function createBody(_options: BodyPartOptions) {
   const { x, y, radius, constraint, options } = _options;
   const { bodies } = Matter.Composites.stack(
@@ -85,7 +86,7 @@ function createBody(_options: BodyPartOptions) {
         pointB: { x: 0, y: -radius },
         damping: 0,
         length: 0,
-        stiffness: 1,
+        stiffness: 0.5,
       }),
       // Matter.Constraint.create({
       //   ...common,
@@ -104,7 +105,11 @@ function createBody(_options: BodyPartOptions) {
 export function createStickman(
   x: number,
   y: number,
-  options?: Partial<{ scale: number; render: Matter.IBodyRenderOptions }>
+  options?: Partial<{
+    scale: number;
+    render: Matter.IBodyRenderOptions;
+    bodyDef: Matter.IBodyDefinition;
+  }>
 ): Matter.Composite {
   const { scale, render } = defaults(options ?? ({} as any), {
     scale: 1,
@@ -161,7 +166,7 @@ export function createStickman(
     Matter.Constraint.create({
       bodyA: chest.bodies.at(-1),
       bodyB: chest.bodies.at(0),
-      stiffness: 1 / 100,
+      stiffness: 1 / 1_000,
     }),
   ];
 
@@ -187,7 +192,6 @@ export function createStickman(
       },
       render,
       restitution: 0,
-      density: 0.0001,
     },
   });
 
@@ -269,7 +273,6 @@ export function createStickman(
       render,
       friction: 1,
       restitution: 0,
-      density: 0.0001,
     },
   });
 
@@ -371,7 +374,6 @@ export function createStickman(
       },
       render,
       restitution: 0,
-      density: 0.0001,
     },
   });
 
@@ -388,21 +390,9 @@ export function createStickman(
 
     Matter.Constraint.create({
       bodyA: chest.bodies.at(-1),
-      // pointA: { x: radius, y: 0 },
       bodyB: upperLeftLeg.bodies.at(-1),
-      // pointB: { x: -radius, y: 0 },
-      stiffness: 1,
-      // damping: 0,
+      stiffness: 0.5,
     }),
-    // Matter.Constraint.create({
-    //   bodyA: upperLeftLeg.bodies.at(-1),
-    //   pointA: { x: radius, y: 0 },
-    //   bodyB: chest.bodies.at(0),
-    //   pointB: { x: -radius, y: 0 },
-    //   stiffness: 1,
-    //   damping: 0,
-    //   length: 0,
-    // }),
   ];
 
   //
@@ -437,7 +427,7 @@ export function createStickman(
       pointA: { x: -radius, y: 0 },
       bodyB: lowerLeftLeg.bodies.at(-1),
       pointB: { x: radius, y: 0 },
-      stiffness: 1,
+      stiffness: 1 / 100,
       damping: 0,
       length: 0,
     }),
@@ -458,7 +448,6 @@ export function createStickman(
       },
       render,
       restitution: 0,
-      density: 0.0001,
     },
   });
 
@@ -468,29 +457,9 @@ export function createStickman(
       pointA: { x: -radius, y: -radius },
       bodyB: chest.bodies.at(-1),
       pointB: { x: 0, y: radius },
-      stiffness: 1,
+      stiffness: 0.5,
       damping: 0,
       length: 0,
-    }),
-    Matter.Constraint.create({
-      bodyA: upperRightLeg.bodies.at(0),
-      bodyB: chest.bodies.at(-1),
-    }),
-    Matter.Constraint.create({
-      bodyA: upperRightLeg.bodies.at(0),
-      // pointA: { x: -radius, y: -radius },
-      bodyB: chest.bodies.at(-2),
-      // pointB: { x: 0, y: radius },
-      // stiffness: 1,
-      // damping: 0,
-    }),
-    Matter.Constraint.create({
-      bodyA: chest.bodies.at(-1),
-      // pointA: { x: radius, y: 0 },
-      bodyB: upperRightLeg.bodies.at(0),
-      // pointB: { x: -radius, y: 0 },
-      stiffness: 1,
-      damping: 0,
     }),
   ];
 
@@ -526,6 +495,9 @@ export function createStickman(
       pointA: { x: radius, y: 0 },
       bodyB: lowerRightLeg.bodies.at(0),
       pointB: { x: -radius, y: 0 },
+      stiffness: 1 / 100,
+      damping: 0,
+      length: 0,
     }),
   ];
 
@@ -544,8 +516,8 @@ export function createStickman(
     Matter.Constraint.create({
       bodyA: upperRightLeg.bodies.at(1),
       bodyB: upperLeftLeg.bodies.at(-2),
-      stiffness: 3 / 100,
-      damping: 1,
+      stiffness: 1 / 10_000,
+      damping: 1 / 1_000,
       length: radius,
     }),
   ];
