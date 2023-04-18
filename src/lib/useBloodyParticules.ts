@@ -1,6 +1,6 @@
 //
 
-import { Particle } from "@/old/Particle";
+import { Particle } from "@/lib/Particle";
 import {
   useEngineEvent,
   useEventBeforeUpdate,

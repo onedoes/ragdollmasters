@@ -1,3 +1,5 @@
+//
+
 import { useEventBeforeUpdate } from "@1.framework/matter4react";
 import debug from "debug";
 import { Body, Engine, Vector, type IEventTimestamped } from "matter-js";
@@ -9,16 +11,15 @@ import { moveBody } from "./moveBody";
 export const log = debug("@:lib:useAIMoves");
 
 //
+
 const SPEED = 15;
+
+//
+
 export function useAIMoves(
   headRef: MutableRefObject<Body | undefined>,
   playerRef: MutableRefObject<Body | undefined>
 ) {
-  // const onMove = useCallback(moveBody(headRef.current), [
-  //   headRef.current,
-  //   playerRef.current,
-  // ]);
-
   useEventBeforeUpdate(
     (event: IEventTimestamped<Engine>) => {
       const { current: head } = headRef;

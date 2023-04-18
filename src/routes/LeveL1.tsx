@@ -1,4 +1,8 @@
+//
+
 import { Viewport } from "@/components/Viewport";
+import { useImpactHandler } from "@/lib/handleImpacts";
+import { moveBody } from "@/lib/moveBody";
 import { useAIMoves } from "@/lib/useAIMoves";
 import { useBloodyParticules } from "@/lib/useBloodyParticules";
 import { createStickman } from "@/utils/createStickman";
@@ -6,14 +10,10 @@ import {
   Composite,
   PlayerInput,
   SurroundingWalls,
-  useEventCollisionStart,
 } from "@1.framework/matter4react";
 import debug from "debug";
 import Matter, { Body } from "matter-js";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { defaultCollisionBehavior } from "../lib/defaultCollisionBehavior";
-import { useImpactHandler } from "../lib/handleImpacts";
-import { moveBody } from "../lib/moveBody";
 
 //
 
@@ -34,7 +34,6 @@ export function LeveL1() {
   const [opponent, setOpponent] = useState<Matter.Composite>();
   const playerHead = useRef<Body>();
   const opponentHead = useRef<Body>();
-  const opponentBody = useRef<Body>(null);
 
   //
 
@@ -65,7 +64,6 @@ export function LeveL1() {
 
   //
 
-  useEventCollisionStart(defaultCollisionBehavior, [playerHead, opponentBody]);
   useImpactHandler(impactComposites, [player?.id, opponent?.id]);
   useBloodyParticules(impactComposites, [player?.id, opponent?.id]);
   useAIMoves(opponentHead, playerHead);

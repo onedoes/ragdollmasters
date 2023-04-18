@@ -17,7 +17,7 @@ export const log = debug("@:lib:useImpactHandler");
 //
 
 type ImpactStrengthPair = [Body, number, Vector];
-const SPEED = -30; // 1 / 5_000; //6666;
+const SPEED = -30;
 const TIMESCALE_LIMIT = 0.22;
 
 export function useImpactHandler(
@@ -117,16 +117,12 @@ export function useImpactHandler(
     } else if (nextImpactedBody.length) {
       const lastImpact = nextImpactedBody.at(-1);
       const [, ratio] = lastImpact || [null, 0];
-      // log(easingFactor);
-      // log("Math.exp(1 - ratio)", ratio, Math.exp(1 - ratio), Math.exp(ratio));
 
       // slow motion effect
-
       event.source.timing.timeScale = Math.min(
         1,
         Math.max(TIMESCALE_LIMIT, cubicIn(1 - ratio * ratio))
       );
-      // log(ratio, event.source.timing.timeScale);
     }
     //
 

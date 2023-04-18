@@ -2,7 +2,7 @@
 
 import { useEventCollisionStart } from "@1.framework/matter4react";
 import debug from "debug";
-import type { Body, Composite, Engine, IEventCollision, Pair } from "matter-js";
+import type { Composite, Engine, IEventCollision, Pair } from "matter-js";
 import { useRef, type DependencyList } from "react";
 
 //
@@ -11,7 +11,6 @@ export const log = debug("@:lib:useStickmanCollision");
 
 //
 
-type ImpactStrengthPair = [Body, number];
 export function useStickmanCollision(
   composites: Composite[],
   callbacks: {
@@ -24,11 +23,8 @@ export function useStickmanCollision(
 ) {
   log("!");
   const body_group_ref = useRef(new Map<number, number>());
-  const body_colors_ref = useRef(new Map<number, string>());
 
   useEventCollisionStart((event) => {
-    // log("useEventCollisionStart", event);
-    const bodyId_to_color = body_colors_ref.current;
     const body_group = body_group_ref.current;
 
     for (const pair of event.pairs) {

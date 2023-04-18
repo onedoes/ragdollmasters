@@ -1,6 +1,5 @@
 import Matter, { Body } from "matter-js";
 
-// const parti = Matter.Body.nextCategory()
 export class Particle {
   body: Body;
   life = 1;
@@ -13,7 +12,6 @@ export class Particle {
       render: { fillStyle: "#f00", opacity: 1 },
       collisionFilter: { category: 0 },
     });
-    // Matter.World.add(world, this.body);
   }
   update(event: Matter.IEventTimestamped<Matter.Engine>) {
     const timeScale = ((event as any).delta || 1000 / 60) / 10000;

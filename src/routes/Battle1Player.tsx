@@ -16,17 +16,7 @@ export const log = debug("@:routes:Battle1Player");
 export function Battle1Player({
   ...props
 }: ComponentPropsWithoutRef<"section">) {
-  // const [app, setApp] = useState<Application>();
   const { sendN } = useContext(GameContext);
-  // const viewport = useOnResize();
-  // // console.log(app?.resizeTo);
-  // useLayoutEffect(() => {
-  //   const [width, height] = viewport;
-  //   app?.renderer?.resize(width, height);
-  //   app?.resize();
-  // }, [app, viewport]);
-
-  // const blurFilter = useMemo(() => new BlurFilter(0), []);
 
   useKeyPressEvent("Escape", sendN("BACK"));
 
