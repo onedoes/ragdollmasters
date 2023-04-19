@@ -1,22 +1,20 @@
 //
 
-import type { ComponentPropsWithoutRef, FC } from "react";
+import type { ComponentPropsWithoutRef, FC, PropsWithChildren } from "react";
 
 //
 
-export const MenuButton: FC<ComponentPropsWithoutRef<"button">> = ({
-  children,
-  ...props
-}) => (
+export const MenuButton: FC<
+  PropsWithChildren<ComponentPropsWithoutRef<"button">>
+> = ({ children, ...props }) => (
   <Button {...props} className={[props.className, "w-100% "].join(" ")}>
     {children}
   </Button>
 );
 
-export const Button: FC<ComponentPropsWithoutRef<"button">> = ({
-  children,
-  ...props
-}) => (
+export const Button: FC<
+  PropsWithChildren<ComponentPropsWithoutRef<"button">>
+> = ({ children, ...props }) => (
   <button
     {...props}
     className={[
