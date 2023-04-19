@@ -4,34 +4,11 @@ import { useActor } from "@xstate/react";
 import { Suspense, lazy, useContext, useMemo } from "react";
 import { GameContext, GameContextProvider, type States } from "./GameContext";
 import { Loading } from "./components/Loading";
+import { routes } from "./routes";
 
 //
 
-const Menu = lazy(() =>
-  import("./routes/Menu").then(({ Menu }) => ({ default: Menu }))
-);
-
-const GameMode = lazy(() =>
-  import("./routes/GameMode").then(({ GameMode }) => ({ default: GameMode }))
-);
-
-const Battle1Player = lazy(() =>
-  import("./routes/Battle1Player").then(({ Battle1Player }) => ({
-    default: Battle1Player,
-  }))
-);
-
-//
-
-const routes = new Map<States, typeof Menu>([
-  ["idle", Menu],
-  ["play_mode.1 Player", Battle1Player],
-  ["play_mode", GameMode],
-]);
-
-//
-
-function Router() {
+function Router({ routes }: { routes: Map<States, ReturnType<typeof lazy>> }) {
   const { gameM } = useContext(GameContext);
   const [gameA] = useActor(gameM);
 
@@ -60,7 +37,7 @@ export default function App() {
     <GameContextProvider>
       <main className="h-screen">
         <Suspense fallback={<LoadingScreen />}>
-          <Router />
+          <Router routes={routes} />
         </Suspense>
       </main>
     </GameContextProvider>
