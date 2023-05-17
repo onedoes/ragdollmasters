@@ -8,6 +8,7 @@ import { useKeyPressEvent } from "react-use";
 
 //
 
+export default GameMode;
 export function GameMode({ ...props }: ComponentPropsWithoutRef<"section">) {
   const { sendN } = useContext(GameContext);
 

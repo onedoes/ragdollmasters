@@ -6,6 +6,7 @@ import { useContext, type ComponentPropsWithoutRef } from "react";
 
 //
 
+export default Menu;
 export function Menu({ ...props }: ComponentPropsWithoutRef<"section">) {
   const { sendN } = useContext(GameContext);
   return (

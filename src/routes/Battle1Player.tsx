@@ -13,6 +13,7 @@ export const log = debug("@:routes:Battle1Player");
 
 //
 
+export default Battle1Player;
 export function Battle1Player({
   ...props
 }: ComponentPropsWithoutRef<"section">) {
