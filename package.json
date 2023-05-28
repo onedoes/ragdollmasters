@@ -39,7 +39,7 @@
     "@xstate/inspect": "^0.8.0",
     "ts-toolbelt": "^9.6.0",
     "typescript": "^5.0.4",
-    "unocss": "^0.51.4",
+    "unocss": "^0.52.0",
     "vite": "^4.2.1",
     "vitest": "^0.31.0"
   }
