@@ -598,7 +598,7 @@ __metadata:
     "@types/matter-js": ^0.18.2
     "@types/react": ^18.0.35
     "@types/react-dom": ^18.0.11
-    "@unocss/preset-web-fonts": ^0.52.0
+    "@unocss/preset-web-fonts": ^0.53.0
     "@vitejs/plugin-react": ^4.0.0
     "@xstate/inspect": ^0.8.0
     "@xstate/react": ^3.2.1
@@ -839,6 +839,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@unocss/core@npm:0.53.0":
+  version: 0.53.0
+  resolution: "@unocss/core@npm:0.53.0"
+  checksum: a57b0b5fcf122cd063f74581a2855d9cadc276d45c5fb79e6b4d83706a1dea3d5cd7fa529987ebde7a01e0554b8d1b51fd07650cbe11fe5421737bc75adf0133
+  languageName: node
+  linkType: hard
+
 "@unocss/extractor-arbitrary-variants@npm:0.52.4":
   version: 0.52.4
   resolution: "@unocss/extractor-arbitrary-variants@npm:0.52.4"
@@ -934,13 +941,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@unocss/preset-web-fonts@npm:0.52.4, @unocss/preset-web-fonts@npm:^0.52.0":
+"@unocss/preset-web-fonts@npm:0.52.4":
   version: 0.52.4
   resolution: "@unocss/preset-web-fonts@npm:0.52.4"
   dependencies:
     "@unocss/core": 0.52.4
     ofetch: ^1.0.1
   checksum: 7386d4acf086da5d61cedce108f2ed0bdff48cd3403fb6b233671ec4ca32e76382264b2f0c36a9f2b83b87b4addd06ad5ea70bf23ea3f0a0f986ac5fa1cfa9a4
+  languageName: node
+  linkType: hard
+
+"@unocss/preset-web-fonts@npm:^0.53.0":
+  version: 0.53.0
+  resolution: "@unocss/preset-web-fonts@npm:0.53.0"
+  dependencies:
+    "@unocss/core": 0.53.0
+    ofetch: ^1.0.1
+  checksum: df4eb02a41fa70ab3c5bd7a920525648888b1cc1918263a38200d39206d978270a78f3ed39f79fcab5c9e2ef30c233c8600f5a81d70c9efa1e9e7c55c9d62835
   languageName: node
   linkType: hard
 
