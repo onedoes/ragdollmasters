@@ -831,6 +831,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@unocss/core@npm:0.53.3":
+  version: 0.53.3
+  resolution: "@unocss/core@npm:0.53.3"
+  checksum: f635ae30726482ba50b5e2822a962e216eced69ebfd2c77d55a22d0f6859a25db22b5177575aa1acc258d6c76cecbca8b79285c1281fb444e6d99cbee1de7d7e
+  languageName: node
+  linkType: hard
+
 "@unocss/extractor-arbitrary-variants@npm:0.53.1":
   version: 0.53.1
   resolution: "@unocss/extractor-arbitrary-variants@npm:0.53.1"
@@ -926,13 +933,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@unocss/preset-web-fonts@npm:0.53.1, @unocss/preset-web-fonts@npm:^0.53.0":
+"@unocss/preset-web-fonts@npm:0.53.1":
   version: 0.53.1
   resolution: "@unocss/preset-web-fonts@npm:0.53.1"
   dependencies:
     "@unocss/core": 0.53.1
     ofetch: ^1.0.1
   checksum: ca63b497ced0ff99fb850b7d1060e693eb4e4cf02ed9bca948b516ee8abe302bda2dd2c3635458fd46d78a752710915bf6a3d45393f505b5c9be804411996885
+  languageName: node
+  linkType: hard
+
+"@unocss/preset-web-fonts@npm:^0.53.0":
+  version: 0.53.3
+  resolution: "@unocss/preset-web-fonts@npm:0.53.3"
+  dependencies:
+    "@unocss/core": 0.53.3
+    ofetch: ^1.1.1
+  checksum: 6bfc028cec0d67212d6535c0b708d7c4f2bdd462beb8d569b41d61e3e0a2cd2c039169a60ff79f36eca33a86e981de3f19405bed165863818ab63a6b48abca3c
   languageName: node
   linkType: hard
 
@@ -1693,6 +1710,13 @@ __metadata:
   version: 1.2.2
   resolution: "destr@npm:1.2.2"
   checksum: 3906b49513a64d8442dacb8b798c59d66257ded4ccd2ef1d99b58644d4aa6b30ca61f9a9823d3dcbc78b4db812596e53e85e499f39a498b3b165a045b5228b2b
+  languageName: node
+  linkType: hard
+
+"destr@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "destr@npm:2.0.0"
+  checksum: 5439cfc8e4b207a4c77cce89b3490dcb68b8cbea1ea5171958b89ae1a814a8f988e54e259d9dae8ebee64cfc9d658497e96d0a8905b2d243cf49bda36e578850
   languageName: node
   linkType: hard
 
@@ -2966,6 +2990,17 @@ __metadata:
     node-fetch-native: ^1.2.0
     ufo: ^1.1.2
   checksum: 33b9ab679fb8207665b843d190f2711aa18ab2fe3e2fbc45c2e1294ef946596c6078530864ee655116c1d752311247f0357a89e71a513145b077360ab768ffdb
+  languageName: node
+  linkType: hard
+
+"ofetch@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "ofetch@npm:1.1.1"
+  dependencies:
+    destr: ^2.0.0
+    node-fetch-native: ^1.2.0
+    ufo: ^1.1.2
+  checksum: 93d3e10f1ebcc0f1da69ee9cfd38b2f8818ce849ec3b6bf803351a6175adf6a5565cb130b7dcabd3a639bfe27589f5f84ac0ee4fd294855567d879a0e1f38484
   languageName: node
   linkType: hard
 
