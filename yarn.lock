@@ -846,6 +846,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@unocss/core@npm:0.54.2":
+  version: 0.54.2
+  resolution: "@unocss/core@npm:0.54.2"
+  checksum: 8a2820041826de5d8d5744e2615103a2da5d5a828f37922f413e296608639f65d5126b69d452286810026a1176a64de0e3fbef59b696c80860fd35c25b18a885
+  languageName: node
+  linkType: hard
+
 "@unocss/extractor-arbitrary-variants@npm:0.54.1":
   version: 0.54.1
   resolution: "@unocss/extractor-arbitrary-variants@npm:0.54.1"
@@ -941,13 +948,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@unocss/preset-web-fonts@npm:0.54.1, @unocss/preset-web-fonts@npm:^0.54.0":
+"@unocss/preset-web-fonts@npm:0.54.1":
   version: 0.54.1
   resolution: "@unocss/preset-web-fonts@npm:0.54.1"
   dependencies:
     "@unocss/core": 0.54.1
     ofetch: ^1.1.1
   checksum: bcebed0a1758399ea49df34778a59ab983b1fa9586912875a151c93df52085cdaa0f79961d3071a965c9551664b891314df79ad9d7fa4bfcf0458b4cd9652231
+  languageName: node
+  linkType: hard
+
+"@unocss/preset-web-fonts@npm:^0.54.0":
+  version: 0.54.2
+  resolution: "@unocss/preset-web-fonts@npm:0.54.2"
+  dependencies:
+    "@unocss/core": 0.54.2
+    ofetch: ^1.1.1
+  checksum: 195a1976a4c534c7779046cc9a87780b1b61b819ee4619bc803c4c3cc2cc62683572a7c718bdc23959969fb0fad132da52d1fdb53fd3a91456e6b59ecfb00942
   languageName: node
   linkType: hard
 
