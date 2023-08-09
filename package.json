@@ -34,7 +34,7 @@
     "@types/matter-js": "^0.18.2",
     "@types/react": "^18.0.35",
     "@types/react-dom": "^18.0.11",
-    "@unocss/preset-web-fonts": "^0.54.0",
+    "@unocss/preset-web-fonts": "^0.55.0",
     "@vitejs/plugin-react": "^4.0.0",
     "@xstate/inspect": "^0.8.0",
     "ts-toolbelt": "^9.6.0",
