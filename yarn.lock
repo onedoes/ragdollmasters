@@ -1639,9 +1639,9 @@ __metadata:
   linkType: hard
 
 "defaults@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "defaults@npm:2.0.1"
-  checksum: 97db50b51fdaa076f28885f94248c2d63b05dc6f2361da04f6560d370524faab4556da85e68494a701064d4c1e1e8b2cffec658b572015a69786a3d5e031c6ff
+  version: 2.0.2
+  resolution: "defaults@npm:2.0.2"
+  checksum: fdce6a8d1ff8fbe6a8c11d8ad4c9118e455c36f96d933f950ea415d7e0add6bde4e8537dc625478e9f040315555f12a6088fe9ed11996d5dfaaa447aeb05d169
   languageName: node
   linkType: hard
 
