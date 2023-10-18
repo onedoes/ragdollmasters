@@ -743,7 +743,7 @@ __metadata:
     "@xstate/react": ^3.2.1
     color-string: ^1.9.1
     debug: ^4.3.4
-    defaults: ^2.0.1
+    defaults: ^3.0.0
     eases: ^1.0.8
     matter-js: ^0.19.0
     netplayjs: ^0.4.1
@@ -1853,10 +1853,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"defaults@npm:^2.0.1":
-  version: 2.0.2
-  resolution: "defaults@npm:2.0.2"
-  checksum: fdce6a8d1ff8fbe6a8c11d8ad4c9118e455c36f96d933f950ea415d7e0add6bde4e8537dc625478e9f040315555f12a6088fe9ed11996d5dfaaa447aeb05d169
+"defaults@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "defaults@npm:3.0.0"
+  checksum: 656215c738993a43e436bfbbe8d5aaa3d029e1a3d19fc48c98aba416270eec8d69c194d28d6aaba728366afeadccc923bf2d168613be066fa83a3e232335e65a
   languageName: node
   linkType: hard
 
