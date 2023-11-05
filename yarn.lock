@@ -1002,9 +1002,9 @@ __metadata:
   linkType: hard
 
 "@types/matter-js@npm:^0.19.0":
-  version: 0.19.2
-  resolution: "@types/matter-js@npm:0.19.2"
-  checksum: b7b6a7be742a5ac1f48a9eb4a0f42b7cf858a1aa2733eeea971ddd2fbbed26de6555904f9d9fc374d55d0f9998521559118708348742c406c7e0c9489668c67f
+  version: 0.19.3
+  resolution: "@types/matter-js@npm:0.19.3"
+  checksum: 8f7733660d8758368d99f6bf615c98cfa371e5b7854349bf5614d43460efeabc5c3d27e99b7ded07db76d49c88e06348ad38f4fa07d78657647ec8997ad51de6
   languageName: node
   linkType: hard
 
