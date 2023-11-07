@@ -981,9 +981,9 @@ __metadata:
   linkType: hard
 
 "@types/eases@npm:^1":
-  version: 1.0.3
-  resolution: "@types/eases@npm:1.0.3"
-  checksum: 61e75cda97e2da4bd41f41ed80cddec623d9a027f3433827bb8a06d6bcdc3d68559b5b74bd167e1a0302b6c2570092c4ac232a1a1222eed3143fce5b4ca8f703
+  version: 1.0.4
+  resolution: "@types/eases@npm:1.0.4"
+  checksum: 622d96b685fb9407339d6696980ba8c0c07fdc59c81cd67f9b31248682d606db7af68fd14918a86f389ae3de25b655a1f03b9760afd1a734294044c979743dcd
   languageName: node
   linkType: hard
 
