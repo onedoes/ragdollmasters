@@ -965,9 +965,9 @@ __metadata:
   linkType: hard
 
 "@types/color-string@npm:^1":
-  version: 1.5.4
-  resolution: "@types/color-string@npm:1.5.4"
-  checksum: 257246bb6ebd9920e613653d9f52050e108b667f543beb9b6deb76971c8c21e522be14b99ed269dea2d6b2f168a36e423cdda14658ba86d279029a7a06d35185
+  version: 1.5.5
+  resolution: "@types/color-string@npm:1.5.5"
+  checksum: 93f4de1e977f0da0baef4a4e95d09820371d02b4c8d09a83ef8daa2bb700b50cc6b4fe0eac22d086a0da867c5eb1fceb38fbe96a8a76cd850e7acd71fe4319cf
   languageName: node
   linkType: hard
 
