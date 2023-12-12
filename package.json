@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@tsconfig/strictest": "^2.0.0",
-    "@tsconfig/vite-react": "^2.0.0",
+    "@tsconfig/vite-react": "^3.0.0",
     "@types/color-string": "^1",
     "@types/debug": "^4.1.7",
     "@types/eases": "^1",
