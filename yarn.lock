@@ -894,9 +894,9 @@ __metadata:
   linkType: hard
 
 "@tsconfig/vite-react@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "@tsconfig/vite-react@npm:3.0.0"
-  checksum: 10c0/cc6d213fcb60c6122c7cc113637e7d1e6ce9cfb78c3562ce15b3eaf8562417fd08578c27abb14ad12330ed16463e274d98c733339b86819a260597601ee0c759
+  version: 3.0.1
+  resolution: "@tsconfig/vite-react@npm:3.0.1"
+  checksum: 10c0/73da98de378e93ef4d18f3c98b86bab759a642ade226a72e837f270159dccfddd644473c257b36b3a0adf1049b0559d02e813f5f1e6d644e099de48c9f2fa09f
   languageName: node
   linkType: hard
 
