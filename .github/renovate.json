@@ -6,5 +6,6 @@
     ":timezone(Europe/Paris)"
   ],
   "dependencyDashboardAutoclose": true,
-  "labels": ["dependencies"]
+  "labels": ["dependencies"],
+  "recreateWhen": "never"
 }
