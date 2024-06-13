@@ -745,7 +745,7 @@ __metadata:
     "@unocss/preset-web-fonts": "npm:^0.61.0"
     "@vitejs/plugin-react": "npm:^4.0.0"
     "@xstate/inspect": "npm:^0.8.0"
-    "@xstate/react": "npm:^3.2.1"
+    "@xstate/react": "npm:^4.0.0"
     color-string: "npm:^1.9.1"
     debug: "npm:^4.3.4"
     defaults: "npm:^3.0.0"
@@ -760,7 +760,7 @@ __metadata:
     unocss: "npm:^0.61.0"
     vite: "npm:^5.0.0"
     vitest: "npm:^1.0.0"
-    xstate: "npm:^4.37.1"
+    xstate: "npm:^5.0.0"
   languageName: unknown
   linkType: soft
 
@@ -1442,22 +1442,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xstate/react@npm:^3.2.1":
-  version: 3.2.2
-  resolution: "@xstate/react@npm:3.2.2"
+"@xstate/react@npm:^4.0.0":
+  version: 4.1.1
+  resolution: "@xstate/react@npm:4.1.1"
   dependencies:
     use-isomorphic-layout-effect: "npm:^1.1.2"
-    use-sync-external-store: "npm:^1.0.0"
+    use-sync-external-store: "npm:^1.2.0"
   peerDependencies:
-    "@xstate/fsm": ^2.0.0
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
-    xstate: ^4.37.2
+    xstate: ^5.11.0
   peerDependenciesMeta:
-    "@xstate/fsm":
-      optional: true
     xstate:
       optional: true
-  checksum: 10c0/3aab6169295fcbd77a217535d8674557165c5a931fc70c61824df89fdd0e54fe89468b7ca2690f78a3c0ad0612d1f9913b29c4667af06db0682d396a092c4f82
+  checksum: 10c0/4687f1a97315612cc2e4833453a3614f1a6a656494680c7c4bee901141765ad4c5d6ed1a76f6cbacaa32f6b533eae67274b0c31bd688ba011c67475fd9c2708d
   languageName: node
   linkType: hard
 
@@ -4114,7 +4111,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"use-sync-external-store@npm:^1.0.0":
+"use-sync-external-store@npm:^1.2.0":
   version: 1.2.2
   resolution: "use-sync-external-store@npm:1.2.2"
   peerDependencies:
@@ -4302,10 +4299,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"xstate@npm:^4.37.1":
-  version: 4.38.3
-  resolution: "xstate@npm:4.38.3"
-  checksum: 10c0/8a2063743517390107275113bca0e757dba99102e7d57d40cf656b5cc03a6f2c5e10fbf3752294d9d29fbe1d8757bb9a54f54c934a22f205a237956dd10dcd0f
+"xstate@npm:^5.0.0":
+  version: 5.13.2
+  resolution: "xstate@npm:5.13.2"
+  checksum: 10c0/dc4f273bbc89a152ca8615d7a3e959fe5b88c79a6c87b5db689ab021e09ec0f3c5d3dfed3b2f13ac458c92a6b7c6cecdbb2df42caff1e8ba3b5451c21253f39d
   languageName: node
   linkType: hard
 
