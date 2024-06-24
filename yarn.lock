@@ -750,7 +750,7 @@ __metadata:
     debug: "npm:^4.3.4"
     defaults: "npm:^3.0.0"
     eases: "npm:^1.0.8"
-    matter-js: "npm:^0.19.0"
+    matter-js: "npm:^0.20.0"
     netplayjs: "npm:^0.4.1"
     react: "npm:^18.2.0"
     react-dom: "npm:^18.2.0"
@@ -2782,10 +2782,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"matter-js@npm:^0.19.0":
-  version: 0.19.0
-  resolution: "matter-js@npm:0.19.0"
-  checksum: 10c0/8b35d7838a608b02005016862eeb78f061fce5a4c156d1801e9d52c4b6e2a1c328b09c3a6e74fb3df5d13be08940083e5c3e519a4258e0aeb30079231994bb55
+"matter-js@npm:^0.20.0":
+  version: 0.20.0
+  resolution: "matter-js@npm:0.20.0"
+  checksum: 10c0/95d58f407205ad24c96422109c959999f474ef29af79b4c2ad7550bca97cdcdac99df31ebe35ab858d9863c8f6cd5205339fbbff70909b56a3e2a6a57200c51b
   languageName: node
   linkType: hard
 

@@ -18,7 +18,7 @@
     "debug": "^4.3.4",
     "defaults": "^3.0.0",
     "eases": "^1.0.8",
-    "matter-js": "^0.19.0",
+    "matter-js": "^0.20.0",
     "netplayjs": "^0.4.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
