@@ -769,7 +769,7 @@ __metadata:
     "@types/color-string": "npm:^1"
     "@types/debug": "npm:^4.1.7"
     "@types/eases": "npm:^1"
-    "@types/matter-js": "npm:^0.19.0"
+    "@types/matter-js": "npm:^0.20.0"
     "@types/react": "npm:^18.0.35"
     "@types/react-dom": "npm:^18.0.11"
     "@unocss/preset-web-fonts": "npm:^0.65.0"
@@ -1035,10 +1035,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/matter-js@npm:^0.19.0":
-  version: 0.19.8
-  resolution: "@types/matter-js@npm:0.19.8"
-  checksum: 10c0/3bb99f1d8c633cb3a0ddc1ba7ebc29847a24f97a59d12017adc9fe9340991df3525aaa26c52db6f7b4b00b92d56cb32eea680ab987934294fee4565d16f4f4d2
+"@types/matter-js@npm:^0.20.0":
+  version: 0.20.2
+  resolution: "@types/matter-js@npm:0.20.2"
+  checksum: 10c0/da953eb54e3c0595ee4d9c36a95568161d41bdc42ae6fca0d479c0f0855e84c92925059d4bdb64a03d16ee5b7eca55af645bd26d2dfc581d574a42519ff1d345
   languageName: node
   linkType: hard
 
