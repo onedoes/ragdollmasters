@@ -753,7 +753,7 @@ __metadata:
   resolution: "@onedoes/ragdollmasters@workspace:."
   dependencies:
     "@tsconfig/strictest": "npm:^2.0.0"
-    "@tsconfig/vite-react": "npm:^3.0.0"
+    "@tsconfig/vite-react": "npm:^8.0.0"
     "@types/color-string": "npm:^1"
     "@types/debug": "npm:^4.1.7"
     "@types/eases": "npm:^1"
@@ -938,10 +938,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tsconfig/vite-react@npm:^3.0.0":
-  version: 3.4.0
-  resolution: "@tsconfig/vite-react@npm:3.4.0"
-  checksum: 10c0/9bd1516f1553903a231d3d4fa06c4f6d28998f50b80d16dd54c05ed8440221a5b1c2d521ab60020ead0b5d98f8be8e1285883292f68d4bb5c2bf9771d8aba4b1
+"@tsconfig/vite-react@npm:^8.0.0":
+  version: 8.1.1
+  resolution: "@tsconfig/vite-react@npm:8.1.1"
+  checksum: 10c0/2b5680c49cb2f0fe96bd91e799a8416855fae24aac24ae5c796928b3d13263e600e629d8e895531a5d6b618ad0e7e91362d07ce1be8b57737071a4c7ec359df5
   languageName: node
   linkType: hard
 
